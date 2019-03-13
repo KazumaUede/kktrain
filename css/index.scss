@@ -1,0 +1,33 @@
+h2{
+	box-sizing: border-box;
+	height:50px;
+	width: 100px;
+	padding: 10px;
+	border: 10px solid black;	
+	background-color: red;
+}
+
+.contents{
+    height: 500px;
+    width: 1000px;
+    border: 3px solid black;	
+    position: relative;
+    .content{
+        height: 100px;
+        width: 100px;
+        background-color: forestgreen;
+        position: absolute;
+        left: calc(100% - 100px);
+        top: calc(100% - 100px);
+        z-index: 1;
+    }
+    .content2{
+        height: 100px;
+        width: 100px;
+        background-color: palevioletred;
+        position: absolute;
+        left: calc(100% - 150px);
+        top: calc(100% - 150px);
+        z-index: 1;
+    }
+}

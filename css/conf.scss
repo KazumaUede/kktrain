@@ -1,0 +1,38 @@
+.container{
+    padding: 50px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #4bdb9f;
+    font-family: 'Arial', sans-serif;
+    h5{
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: black;
+    }
+    ul li{
+
+        width: 800px;
+        height:30px;
+        line-height: 30px;
+        list-style-type: none;
+        border-bottom: 1px solid black;
+        em{
+            color: black;
+        }
+    }
+    .buttonlist{
+        display: flex;
+        button{
+            display: block;
+            width: 100px;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            margin: 10px;
+        }
+    }
+}
