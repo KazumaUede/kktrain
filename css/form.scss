@@ -4,7 +4,6 @@
     justify-content: center;
     height: 100%;
     width: 100%;
-    background-color: #4bdb9f;
     font-family: 'Arial', sans-serif;
     ul.error_list{
         width: 500px;
@@ -13,12 +12,33 @@
         border-radius: 5px;
         list-style-type: none;
     }
+    h3{
+        width: 80%;
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        background: #f0f7ff;
+        border: dashed 2px #5b8bd0;
+
+    }
     h4{
-        color: black;
-        font-size: 18px;
-        margin-bottom: 10px;
+        width: 80%;
+        padding: 0.5em 1em;
+        margin: 2em 0;
+        color: #474747;
+        background: whitesmoke;/*背景色*/
+        border-left: double 7px #4ec4d3;/*左線*/
+        border-right: double 7px #4ec4d3;/*右線*/
+
     }
     form{
+
+        width: 80%;
+        padding: 8px 19px;
+        margin: 2em 0;
+        color: #2c2c2f;
+        background: #cde4ff;
+        border-top: solid 5px #5989cf;
+        border-bottom: solid 5px #5989cf;
         h5{
             height: 25px;
             line-height: 25px;
@@ -26,13 +46,12 @@
             em{
                 color: red;
             }
-        }	
+        }
         input{
-            
             &[type="text"] ,
             &[type="var"] {
                 display: block;
-                width: 500px;
+                width: calc(100% - 30px);
 
                 padding: 15px;
                 border: none;
@@ -49,7 +68,7 @@
         }
         select {
             display: block;
-            width: 500px;
+            width: 100%;
             margin-bottom: 10px;
             padding: 15px;
             border: none;
@@ -66,6 +85,7 @@
             border-radius: 5px;
             font-size: 16px;
             outline: none;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
         }
     }
 

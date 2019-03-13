@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once("./template/prefectures.php");
 //	require_once("./template/htmlspecialchars.php");
 	$pagetitle = "応募フォーム";
@@ -29,7 +29,7 @@
 	check_session('email');
 ?>
 <div class="container">
-	<h4><?php echo'本日'. $count .'回目の訪問！'; ?></h4>
+	<h3><?php echo'本日'. $count .'回目の訪問！'; ?></h3>
 	<?php if (!empty($_SESSION['error'])){
 		echo '<ul class="error_list">';
 		foreach($_SESSION['error'] as $error){
@@ -45,13 +45,13 @@
 		<select name="prefectures">
 			<option disabled selected>選択してください</option>
 			<?php
-				for ($i=0; $i < count($pref); $i++) { 
+				for ($i=0; $i < count($pref); $i++) {
 					if ($_SESSION['prefectures'] === $pref[$i]){
 						echo '<option selected="selected">'.$pref[$i]."</option>";
 					}else{
 						echo "<option>".$pref[$i]."</option>";
 					}
-				}		
+				}
 			?>
 		</select>
 
