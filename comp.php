@@ -1,8 +1,8 @@
-<?php 
+<?php
 	session_start();
 	if(!isset($_SESSION)) {
 		header('location:form.php');
-		exit;		
+		exit;
 	}
 	$check_list = ['zipcode','prefectures','address','name','kana','telcode','email'];
 
@@ -10,7 +10,6 @@
 		if($_SESSION[$text] === ""){
 			header('location:form.php');
 			exit;
-			
 		}
 	}
 	if($_SESSION['age'] ===''){

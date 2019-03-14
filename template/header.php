@@ -14,6 +14,7 @@
 				<a href="./calendar.php">カレンダー</a>
 				<a href="">チャットツール</a>
 				<a href="./form.php">応募フォーム</a>
+				<a href="./sql.php">応募者一覧</a>
 			</li>
 			<li>
 				<h5>CSS</h5>
