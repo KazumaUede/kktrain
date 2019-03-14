@@ -3,13 +3,17 @@
 //	require_once("./template/htmlspecialchars.php");
 	$pagetitle = "応募フォーム";
 	require_once("./template/system_header.php");
-
-	if(!isset($_COOKIE['count']) ){
+	$today = date("Y/m/d");
+	if(!isset($_COOKIE['count']) || $today !== $_COOKIE['before_day'] ){
 	  //初回アクセス時
 	  $count = 1;
+	  $before_day = date("Y/m/d");
+	  setcookie('count', $count, time()+86400);
+	  setcookie('before_day', $before_day, time()+86400);
 	}else{
 	  //2回目以降
 	  $count = $_COOKIE['count'] + 1;
+	  setcookie('count', $count, time()+86400);
 	}
 	function check_session($s) {
 		if(!isset($_SESSION[$s])){
@@ -17,7 +21,6 @@
 		};
 	};
 	session_start();
-	setcookie('count', $count, time()+10);
 	check_session('zipcode');
 	check_session('prefectures');
 	check_session('address');
@@ -54,7 +57,6 @@
 				}
 			?>
 		</select>
-
 		<h5>住所：市区町村以下<em>(必須)</em></h5>
 		<input type="text" name="address" value="<?php echo $_SESSION['address']; ?>" placeholder=" (例)〇〇市〇〇町〇〇　〇〇-〇" required maxlength="127" />
 		<h5>名前<em>(必須)</em></h5>
