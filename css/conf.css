@@ -1,5 +1,6 @@
 .container {
   padding: 50px;
+  width: 80%;
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -8,9 +9,16 @@
 }
 
 .container h5 {
+  min-width: 500px;
   font-size: 18px;
   margin-bottom: 10px;
   color: black;
+}
+
+.container ul {
+  width: 80%;
+  min-width: 500px;
+  max-width: 1000px;
 }
 
 .container ul li {

@@ -3,14 +3,13 @@
 	session_start();
 	if(!isset($_SESSION)) {
 		header('location:form.php');
-		exit;		
+		exit;
 	}
 	$check_list = ['zipcode','address','name','kana','age','telcode','email'];
 	foreach($check_list as $text){
 		if(!isset($_POST[$text])){
 			header('location:form.php');
 			exit;
-			
 		}
 	}
 
