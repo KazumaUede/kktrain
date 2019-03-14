@@ -1,3 +1,7 @@
+header {
+  position: fixed;
+}
+
 section.fill_section {
   position: absolute;
   top: 0;
@@ -25,6 +29,7 @@ section.fill_section:nth-child(4) {
 }
 
 section.fill_section:nth-child(1) {
+  height: calc(100% - 44 px);
   background-color: blue;
 }
 
@@ -38,4 +43,28 @@ section.fill_section:nth-child(3) {
 
 section.fill_section:nth-child(4) {
   background-color: purple;
+}
+
+section.fill_section .nextsection {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: gray;
+  bottom: 30px;
+  left: calc(50% - 50px);
+}
+
+.to_top {
+  height: 100px;
+  width: 100px;
+  background-color: yellow;
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+  opacity: 0;
+}
+
+footer {
+  position: absolute;
+  top: calc( 100% * 4 + 44px);
 }
