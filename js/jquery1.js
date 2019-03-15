@@ -1,28 +1,29 @@
 $(function(){
-    $('.to_top').hide();
+    $('.to_top').css({display: 'none'});
     var i = 1;
     var section_top = [];
+    var fadeSpeed = 500;
 
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
-        $(".fill_section").eq(i).animate({ height: 'hide'});
+        $(".fill_section").eq(i).css({opacity: '0'});
         i++;
     }
     // トップに戻る
     $(document).on('click','.to_top',function(){
         $('html, body').animate({scrollTop: 0},500,'swing');
     });
-    // トップボタンを表示、非表示
+    // スクロール時の各種コマンド
     $(window).scroll(function () {
-        if($(window).scrollTop() >= 200) {
-            $('.to_top').animate({ width: 'show'}, 'fast' );
+        if($(window).scrollTop() >= 100) {
+            $('.to_top').animate( { opacity: 'show',}, { duration: fadeSpeed, easing: 'swing' } );
         } else {
-            $('.to_top').animate({ width: 'hide'}, 'fast' );
+            $('.to_top').animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
         }
         var i = 1;
         while(i< 4){
             if($(window).scrollTop() >= section_top[i] - 500 ){
-                $(".fill_section").eq(i).animate({ height: 'show'}, 'fast' );
+                $(".fill_section").eq(i).animate({opacity: '1'}, fadeSpeed);
             }
             i++;
         }
