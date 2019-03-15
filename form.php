@@ -5,15 +5,15 @@
 	require_once("./template/system_header.php");
 	$today = date("Y/m/d");
 	if(!isset($_COOKIE['count']) || $today !== $_COOKIE['before_day'] ){
-	  //初回アクセス時
-	  $count = 1;
-	  $before_day = date("Y/m/d");
-	  setcookie('count', $count, time()+86400);
-	  setcookie('before_day', $before_day, time()+86400);
+		//初回アクセス時
+		$count = 1;
+		$before_day = date("Y/m/d");
+		setcookie('count', $count, time()+86400);
+		setcookie('before_day', $before_day, time()+86400);
 	}else{
-	  //2回目以降
-	  $count = $_COOKIE['count'] + 1;
-	  setcookie('count', $count, time()+86400);
+		//2回目以降
+		$count = $_COOKIE['count'] + 1;
+		setcookie('count', $count, time()+86400);
 	}
 	function check_session($s) {
 		if(!isset($_SESSION[$s])){
@@ -69,19 +69,18 @@
 		<p>
 			<label>
 				<input type="radio" name="sex" value="男性" <?php
-					   if ($_SESSION['sex'] === "男性"){
-						   echo 'checked';
-					   }
-						?> />
+					if ($_SESSION['sex'] === "男性"){
+						echo 'checked';
+					}?> />
 				<span>男性</span>
 			</label>
 		</p>
 		<p>
 			<label>
 				<input type="radio" name="sex" value="女性" <?php
-					   if ($_SESSION['sex'] === "女性"){
-						   echo "checked";
-					   }
+					if ($_SESSION['sex'] === "女性"){
+						echo "checked";
+					}
 						?> />
 				<span>女性</span>
 			</label>
