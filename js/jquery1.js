@@ -43,7 +43,6 @@ $(function(){
         }
         if(!_scrollEvent2){
             _scrollEvent2 = setTimeout(function(){
-                console.log($(window).scrollTop());
                 _scrollEvent2 = null;
                 switch (true) {
                     case $(window).scrollTop() < center_section:
