@@ -11,7 +11,7 @@ $(function(){
     }
     // トップに戻る
     $(document).on('click','.to_top',function(){
-        $('html, body').animate({scrollTop: 0},500,'swing');
+        $('html, body').animate({scrollTop: 0},fadeSpeed,'swing');
     });
     // スクロール時の各種コマンド
     $(window).scroll(function () {
@@ -31,6 +31,6 @@ $(function(){
     // 次のセレクションへ移動
     $(document).on('click','.nextsection',function(){
         var index = $(".nextsection").index(this) + 1 ;
-        $('html, body').animate({scrollTop:$(".fill_section").eq(index).offset().top},500,'swing')
+        $('html, body').animate({scrollTop:section_top[index]},fadeSpeed,'swing')
     });
 });
