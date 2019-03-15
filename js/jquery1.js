@@ -1,14 +1,16 @@
 $(function(){
     $('.to_top').css({display: 'none'});
-    var i = 1;
+    var i = 0;
     var section_top = [];
     var fadeSpeed = 500;
 
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
+        console.log(section_top[i]);
         $(".fill_section").eq(i).css({opacity: '0'});
         i++;
     }
+    $(".fill_section").eq(0).animate({opacity: '1'}, fadeSpeed);
     // トップに戻る
     $(document).on('click','.to_top',function(){
         $('html, body').animate({scrollTop: 0},fadeSpeed,'swing');
@@ -20,7 +22,7 @@ $(function(){
         } else {
             $('.to_top').animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
         }
-        var i = 1;
+        var i = 0;
         while(i< 4){
             if($(window).scrollTop() >= section_top[i] - 500 ){
                 $(".fill_section").eq(i).animate({opacity: '1'}, fadeSpeed);
