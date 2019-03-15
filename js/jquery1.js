@@ -4,6 +4,8 @@ $(function(){
     var i = 0;
     var section_top = [];
     var fadeSpeed = 500;
+    var _scrollEvent;
+    var _scrollEvent2;
 
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
@@ -19,45 +21,52 @@ $(function(){
     });
     // スクロール時の各種コマンド
     $(window).scroll(function () {
-        if ($('.to_top').is(':animated')){
-        }else{
-            if($(window).scrollTop() >= 100) {
-                $('.to_top').animate( { opacity: 'show',}, { duration: fadeSpeed, easing: 'swing' } );
-            } else {
-                $('.to_top').animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
-            }
-        }
-        var i = 0;
-        if ($(".fill_section").eq(3).css('opacity') == '0'){
-            console.log(" 処理中");
-            while(i< 4){
-                if($(window).scrollTop() >= section_top[i] - 500 ){
-                    $(".fill_section").eq(i).animate({opacity: '1'}, fadeSpeed);
+
+        if(!_scrollEvent){
+            _scrollEvent = setTimeout(function(){
+                _scrollEvent = null;
+                if($(window).scrollTop() >= 100) {
+                    $('.to_top').stop().animate( { opacity: 'show',}, { duration: fadeSpeed, easing: 'swing' } );
+                } else {
+                    $('.to_top').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
                 }
-                i++;
-            }
+                var i = 0;
+                if ($(".fill_section").eq(3).css('opacity') == '0'){
+                    while(i< 4){
+                        if($(window).scrollTop() >= section_top[i] - 500 ){
+                            $(".fill_section").eq(i).animate({opacity: '1'}, fadeSpeed);
+                        }
+                        i++;
+                    }
+                }
+            }, 200);
         }
-
+        if(!_scrollEvent2){
+            _scrollEvent2 = setTimeout(function(){
+                console.log($(window).scrollTop());
+                _scrollEvent2 = null;
+                switch (true) {
+                    case $(window).scrollTop() < center_section:
+                        pageto(0);
+                        break;
+                    case $(window).scrollTop() < center_section * 3:
+                        pageto(1);
+                        break;
+                    case $(window).scrollTop() < center_section * 5:
+                        pageto(2);
+                        break;
+                    default:
+                        pageto(3);
+                }
+            },3000);
+        }
     });
-    if ($('html, body').is(':animated')){
-        console.log("animate中");
-    }else{
-        setTimeout(function(){
-            if ($(window).scrollTop() < center_section){
-                $('html, body').animate({scrollTop:section_top[0]},fadeSpeed,'swing');
-            }else if(center_section <= $(window).scrollTop() < (center_section * 3) ){
-                $('html, body').animate({scrollTop:section_top[1]},fadeSpeed,'swing');
-            }else if((center_section * 3) <= $(window).scrollTop() < (center_section * 5) ){
-                $('html, body').animate({scrollTop:section_top[2]},fadeSpeed,'swing');
-            }else{
-                $('html, body').animate({scrollTop:section_top[3]},fadeSpeed,'swing');
-            }
-        },3000)
+    function pageto(n) {
+        $('html, body').stop().animate({scrollTop:section_top[n]},fadeSpeed,'swing');
     }
-
     // 次のセレクションへ移動
     $(document).on('click','.nextsection',function(){
         var index = $(".nextsection").index(this) + 1 ;
-        $('html, body').animate({scrollTop:section_top[index]},fadeSpeed,'swing')
+        $('html, body').stop().animate({scrollTop:section_top[index]},fadeSpeed,'swing')
     });
 });
