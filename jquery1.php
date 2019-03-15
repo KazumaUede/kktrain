@@ -3,7 +3,11 @@
     require_once("./template/system_header.php"); ?>
     <div id="container">
         <section class="fill_section">
-            一番目
+            <div class="slideshow">
+                <h4>今週のおすすめ</h4>
+                <ul>
+                </ul>
+            </div>
             <a href="javascript:void(0);" class="nextsection">next</a>
         </section>
         <section class="fill_section">
