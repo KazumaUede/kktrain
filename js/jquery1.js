@@ -100,7 +100,15 @@ $(function(){
 
 
     $(document).on('click','.slideright',function(){
-        $('html, body').animate({scrollTop: 0},fadeSpeed,'swing');
+        stopTimer;
+        startTimer;
+        if(page === lastPage){
+            page = 0;
+            SlaidRight();
+        }else{
+            page ++;
+            SlaidRight();
+        };
     });
 
 
