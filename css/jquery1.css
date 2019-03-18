@@ -30,15 +30,37 @@ section.fill_section:nth-child(4) {
 
 section.fill_section:nth-child(1) {
   height: calc(100% - 44px);
-  padding: 10%;
   margin-top: 44px;
   background-color: blue;
 }
 
+section.fill_section:nth-child(1) a {
+  height: 200px;
+  width: 50px;
+  position: absolute;
+  background-color: yellow;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+section.fill_section:nth-child(1) a:active {
+  box-shadow: none;
+}
+
+section.fill_section:nth-child(1) a.slideleft {
+  top: 30%;
+  left: 25px;
+}
+
+section.fill_section:nth-child(1) a.slideright {
+  top: 30%;
+  right: 25px;
+}
+
 section.fill_section:nth-child(1) .slideshow {
-  height: 100%;
+  height: 80%;
   min-height: 400px;
-  width: 100%;
+  width: 80%;
+  margin-left: 100px;
   min-width: calc(400px * (16 / 9));
   background-color: bisque;
   position: relative;
@@ -64,6 +86,29 @@ section.fill_section:nth-child(1) .slideshow .slide:nth-child(3) {
   background-color: purple;
 }
 
+section.fill_section:nth-child(1) .slideball {
+  height: 50px;
+  width: 80%;
+  position: absolute;
+  background-color: orange;
+  bottom: 80px;
+  left: 11%;
+  display: flex;
+}
+
+section.fill_section:nth-child(1) .slideball .ball {
+  margin: 5px 0 0 150px;
+  height: 40px;
+  width: 40px;
+  background-color: aqua;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+section.fill_section:nth-child(1) .slideball .ball:active {
+  box-shadow: none;
+}
+
 section.fill_section:nth-child(2) {
   background-color: red;
 }
@@ -76,12 +121,12 @@ section.fill_section:nth-child(4) {
   background-color: purple;
 }
 
-section.fill_section .nextsection {
+section.fill_section a.nextsection {
   position: absolute;
   height: 50px;
   width: 100px;
   background-color: gray;
-  bottom: 20px;
+  bottom: 10px;
   left: calc(50% - 50px);
 }
 

@@ -6,7 +6,7 @@ $(function(){
     var fadeSpeed = 500;
     var _scrollEvent;
     var _scrollEvent2;
-
+    $(".slideball .ball").eq(0).css({"cssText" : "background-color : red !important"});
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
         $(".fill_section").eq(i).css({opacity: '0'});
@@ -73,46 +73,70 @@ $(function(){
     //（１）ページの概念・初期ページを設定
     var page =0;
     //（２）イメージの数を最後のページ数として変数化
-    var lastPage =parseInt($(".slideshow .slide").length-1);
+    var lastPage =$(".slideshow .slide").length-1;
     //（３）全部のイメージを一旦非表示
     $(".slideshow .slide").css("display","none");
     //（４）初期ページを表示
     $(".slideshow .slide").eq(page).css("display","block");
     // （５）ページ切換用、自作関数作成
-    function SlaidRight(){
+    // 右送り
+    $(document).on('click','.slideright',function(){
+        stopTimer();
+        startTimer();
+        if(page === lastPage){
+            page = 0;
+            slideRight();
+        }else{
+            page ++;
+            slideRight();
+        };
+    });
+    function slideRight(){
         if( page === 0){
-            SlaidRight_Set(lastPage,page);
+            slideRight_Set(lastPage,page);
         }else{
             cpage = page -1;
-            SlaidRight_Set(cpage,page);
+            slideRight_Set(cpage,page);
         }
     };
-    function SlaidRight_Set(lp,np){
+    function slideRight_Set(lp,np){
         $(".slideshow .slide").eq(lp).css({"z-index":10});
         $(".slideshow .slide").eq(np).css({"z-index":5}).show();
         $(".slideshow .slide").eq(lp).animate( { width: 'hide'},1000 );
+        $(".slideball .ball").eq(lp).css({"cssText" : "background-color : aqua !important"});
+        $(".slideball .ball").eq(np).css({"cssText" : "background-color : red !important"});
+
     }
-    function SlaidLeft_Set(lp,np){
+    // 左送り
+    $(document).on('click','.slideleft',function(){
+        stopTimer();
+        startTimer();
+        if(page === 0){
+            page = lastPage;
+            slideleft();
+        }else{
+            page --;
+            slideleft();
+};
+    });
+    function slideleft(){
+        if( page === lastPage){
+            slideleft_Set(0,page);
+        }else{
+            cpage = page +1;
+            slideleft_Set(cpage,page);
+        }
+    };
+
+    function slideleft_Set(lp,np){
         $(".slideshow .slide").eq(lp).css({"z-index":5});
         $(".slideshow .slide").eq(np).css({"z-index":10}).animate( { width: 'show'},1000 );
-        $(".slideshow .slide").eq(lp).css("display","none");
+        $(".slideball .ball").eq(lp).css({"cssText" : "background-color : aqua !important"});
+        $(".slideball .ball").eq(np).css({"cssText" : "background-color : red !important"});
+        setTimeout(function(){
+            $(".slideshow .slide").eq(lp).css("display","none");
+        },1000);
     }
-
-
-    $(document).on('click','.slideright',function(){
-        stopTimer;
-        startTimer;
-        if(page === lastPage){
-            page = 0;
-            SlaidRight();
-        }else{
-            page ++;
-            SlaidRight();
-        };
-    });
-
-
-
 
 
     //（６）～秒間隔でイメージ切換の発火設定
@@ -121,10 +145,10 @@ $(function(){
         Timer =setInterval(function(){
             if(page === lastPage){
                 page =0;
-                SlaidRight();
+                slideRight();
             }else{
                 page++;
-                SlaidRight();
+                slideRight();
             };
         },5000
         );
@@ -134,14 +158,5 @@ $(function(){
         clearInterval(Timer);
     }
     startTimer();
-
-
-
-
-
-
-
-
-
 
 });

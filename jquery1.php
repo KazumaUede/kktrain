@@ -11,6 +11,11 @@
                 <div class ="slide">2</div>
                 <div class ="slide">3</div>
             </div>
+            <div class="slideball">
+                <div class ="ball"></div>
+                <div class ="ball"></div>
+                <div class ="ball"></div>
+            </div>
             <a href="javascript:void(0);" class="nextsection">next</a>
         </section>
         <section class="fill_section">
