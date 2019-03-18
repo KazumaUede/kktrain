@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="./css/style.min.css">
 	<link rel="stylesheet" href="./css/color.css">
 	<?php
-	$name = './css/' . str_replace(".php", "", basename($_SERVER['PHP_SELF'])) .'.min.css';
+	$name = './css/' . str_replace(".php", "", basename($_SERVER['PHP_SELF'])) .'.css';
 	if (file_exists($name)){
 		echo '<link rel="stylesheet" href="'. $name .'">';
 	}

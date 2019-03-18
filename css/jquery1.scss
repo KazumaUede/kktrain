@@ -12,12 +12,13 @@ section.fill_section{
     border: 2px solid black;
     @for $i from 1 through 4 {
         &:nth-child(#{$i}){
-            top: calc( 100% * (#{$i} - 1 ) + 44px);
+            top: calc( 100% * (#{$i} - 1 ) );
         }
     }
     &:nth-child(1){
-        height: calc(100% - 44 px);
+        height: calc(100% - 44px);
         padding: 10%;
+        margin-top: 44px;
         background-color: blue;
         .slideshow{
             height: 100%;
@@ -25,6 +26,23 @@ section.fill_section{
             width: 100%;
             min-width: calc(400px * (16 / 9));
             background-color: bisque;
+            position:relative;
+            .slide{
+                height: 100%;
+                width: 100%;
+                position:absolute;
+                left:0;
+                top:0;
+                &:nth-child(1){
+                    background-color: red;
+                }
+                &:nth-child(2){
+                    background-color: green;
+                }
+                &:nth-child(3){
+                    background-color: purple;
+                }
+            }
         }
     }
     &:nth-child(2){

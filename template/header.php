@@ -25,7 +25,7 @@
 			</li>
 			<li>
 				<h5>JavaScript</h5>
-				<a href="">動き</a>
+				<a href="./jquery1.php">jquery1</a>
 				<a href="">非同期</a>
 				<a href="">配置</a>
 			</li>

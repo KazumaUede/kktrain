@@ -14,7 +14,7 @@ $(function(){
     }
     var center_section = (section_top[1] - section_top[0]) / 2 ;
     $(".fill_section").eq(0).animate({opacity: '1'}, fadeSpeed);
-    $('html, body').animate({scrollTop:section_top[0]},0,'swing')
+    $('html, body').animate({scrollTop: 0},0,'swing');
     // トップに戻る
     $(document).on('click','.to_top',function(){
         $('html, body').animate({scrollTop: 0},fadeSpeed,'swing');
@@ -46,7 +46,7 @@ $(function(){
                 _scrollEvent2 = null;
                 switch (true) {
                     case $(window).scrollTop() < center_section:
-                        pageto(0);
+                        $('html, body').animate({scrollTop: 0},fadeSpeed,'swing');
                         break;
                     case $(window).scrollTop() < center_section * 3:
                         pageto(1);
@@ -68,4 +68,72 @@ $(function(){
         var index = $(".nextsection").index(this) + 1 ;
         $('html, body').stop().animate({scrollTop:section_top[index]},fadeSpeed,'swing')
     });
+
+    //スライドショー
+    //（１）ページの概念・初期ページを設定
+    var page =0;
+    //（２）イメージの数を最後のページ数として変数化
+    var lastPage =parseInt($(".slideshow .slide").length-1);
+    //（３）全部のイメージを一旦非表示
+    $(".slideshow .slide").css("display","none");
+    //（４）初期ページを表示
+    $(".slideshow .slide").eq(page).css("display","block");
+    // （５）ページ切換用、自作関数作成
+    function SlaidRight(){
+        if( page === 0){
+            SlaidRight_Set(lastPage,page);
+        }else{
+            cpage = page -1;
+            SlaidRight_Set(cpage,page);
+        }
+    };
+    function SlaidRight_Set(lp,np){
+        $(".slideshow .slide").eq(lp).css({"z-index":10});
+        $(".slideshow .slide").eq(np).css({"z-index":5}).show();
+        $(".slideshow .slide").eq(lp).animate( { width: 'hide'},1000 );
+    }
+    function SlaidLeft_Set(lp,np){
+        $(".slideshow .slide").eq(lp).css({"z-index":5});
+        $(".slideshow .slide").eq(np).css({"z-index":10}).animate( { width: 'show'},1000 );
+        $(".slideshow .slide").eq(lp).css("display","none");
+    }
+
+
+    $(document).on('click','.slideright',function(){
+        $('html, body').animate({scrollTop: 0},fadeSpeed,'swing');
+    });
+
+
+
+
+
+    //（６）～秒間隔でイメージ切換の発火設定
+    var Timer;
+    function startTimer(){
+        Timer =setInterval(function(){
+            if(page === lastPage){
+                page =0;
+                SlaidRight();
+            }else{
+                page++;
+                SlaidRight();
+            };
+        },5000
+        );
+    }
+    //（７）～秒間隔でイメージ切換の停止設定
+    function stopTimer(){
+        clearInterval(Timer);
+    }
+    startTimer();
+
+
+
+
+
+
+
+
+
+
 });
