@@ -40,6 +40,7 @@ section.fill_section:nth-child(1) a {
   position: absolute;
   background-color: yellow;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  z-index: 10;
 }
 
 section.fill_section:nth-child(1) a:active {
@@ -56,34 +57,41 @@ section.fill_section:nth-child(1) a.slideright {
   right: 25px;
 }
 
-section.fill_section:nth-child(1) .slideshow {
-  height: 80%;
-  min-height: 400px;
-  width: 80%;
-  margin-left: 100px;
-  min-width: calc(400px * (16 / 9));
-  background-color: bisque;
+section.fill_section:nth-child(1) .slider {
+  width: 800px;
+  height: 600px;
+  margin: 100px auto;
   position: relative;
 }
 
-section.fill_section:nth-child(1) .slideshow .slide {
-  height: 100%;
-  width: 100%;
+section.fill_section:nth-child(1) .slider .slideSet {
   position: absolute;
-  left: 0;
-  top: 0;
+  display: flex;
 }
 
-section.fill_section:nth-child(1) .slideshow .slide:nth-child(1) {
+section.fill_section:nth-child(1) .slider .slide {
+  width: 800px;
+  height: 600px;
+}
+
+section.fill_section:nth-child(1) .slider .slide#page1 {
   background-color: red;
 }
 
-section.fill_section:nth-child(1) .slideshow .slide:nth-child(2) {
+section.fill_section:nth-child(1) .slider .slide#page2 {
   background-color: green;
 }
 
-section.fill_section:nth-child(1) .slideshow .slide:nth-child(3) {
+section.fill_section:nth-child(1) .slider .slide#page3 {
   background-color: purple;
+}
+
+section.fill_section:nth-child(1) .slider .slide#page4 {
+  background-color: gray;
+}
+
+section.fill_section:nth-child(1) .slider .slide#page5 {
+  background-color: orchid;
 }
 
 section.fill_section:nth-child(1) .slideball {
@@ -97,7 +105,6 @@ section.fill_section:nth-child(1) .slideball {
 }
 
 section.fill_section:nth-child(1) .slideball .ball {
-  margin: 5px 0 0 150px;
   height: 40px;
   width: 40px;
   background-color: aqua;

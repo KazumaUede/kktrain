@@ -25,6 +25,7 @@ section.fill_section{
             position: absolute;
             background-color: yellow;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+            z-index: 10;
             &:active {
                 box-shadow: none;
             }
@@ -38,28 +39,33 @@ section.fill_section{
             }
         }
 
-        .slideshow{
-            height: 80%;
-            min-height: 400px;
-            width: 80%;
-            margin-left: 100px;
-            min-width: calc(400px * (16 / 9));
-            background-color: bisque;
-            position:relative;
+        .slider{
+            width: 800px;
+            height: 600px;
+            // overflow: hidden;
+            margin: 100px auto;
+            position: relative;
+            .slideSet {
+                position: absolute;
+                display: flex;
+            }
             .slide{
-                height: 100%;
-                width: 100%;
-                position:absolute;
-                left:0;
-                top:0;
-                &:nth-child(1){
+                width: 800px;
+                height: 600px;
+                &#page1{
                     background-color: red;
                 }
-                &:nth-child(2){
+                &#page2{
                     background-color: green;
                 }
-                &:nth-child(3){
+                &#page3{
                     background-color: purple;
+                }
+                &#page4{
+                    background-color: gray;
+                }
+                &#page5{
+                    background-color: orchid;
                 }
             }
         }
@@ -72,7 +78,7 @@ section.fill_section{
             left: 11%;
             display: flex;
             .ball{
-                margin:5px 0 0 150px;
+                // margin:5px 0 0 150px;
                 height: 40px;
                 width: 40px;
                 background-color: aqua;

@@ -6,6 +6,7 @@ $(function(){
     var fadeSpeed = 500;
     var _scrollEvent;
     var _scrollEvent2;
+    var ballid = 0;
     $(".slideball .ball").eq(0).css({"cssText" : "background-color : red !important"});
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
@@ -69,94 +70,50 @@ $(function(){
         $('html, body').stop().animate({scrollTop:section_top[index]},fadeSpeed,'swing')
     });
 
-    //スライドショー
-    //（１）ページの概念・初期ページを設定
-    var page =0;
-    //（２）イメージの数を最後のページ数として変数化
-    var lastPage =$(".slideshow .slide").length-1;
-    //（３）全部のイメージを一旦非表示
-    $(".slideshow .slide").css("display","none");
-    //（４）初期ページを表示
-    $(".slideshow .slide").eq(page).css("display","block");
-    // （５）ページ切換用、自作関数作成
-    // 右送り
-    $(document).on('click','.slideright',function(){
-        stopTimer();
-        startTimer();
-        if(page === lastPage){
-            page = 0;
-            slideRight();
-        }else{
-            page ++;
-            slideRight();
-        };
+    //スライダー
+    //1.スライドの長さを測る
+    var slideWidth = $('.slide').outerWidth();
+    var slideNum = $('.slide').length;
+    var slideSetWidth = slideWidth * slideNum;
+    //2.並べる
+    $('.slideSet').css('width', slideSetWidth);
+
+    // 前へボタンが押されたとき
+    $('.slideleft').click(function(){
+        slideCurrent--;
+        sliding();
     });
-    function slideRight(){
-        if( page === 0){
-            slideRight_Set(lastPage,page);
-        }else{
-            cpage = page -1;
-            slideRight_Set(cpage,page);
-        }
-    };
-    function slideRight_Set(lp,np){
-        $(".slideshow .slide").eq(lp).css({"z-index":10});
-        $(".slideshow .slide").eq(np).css({"z-index":5}).show();
-        $(".slideshow .slide").eq(lp).animate( { width: 'hide'},1000 );
-        $(".slideball .ball").eq(lp).css({"cssText" : "background-color : aqua !important"});
-        $(".slideball .ball").eq(np).css({"cssText" : "background-color : red !important"});
-
-    }
-    // 左送り
-    $(document).on('click','.slideleft',function(){
-        stopTimer();
-        startTimer();
-        if(page === 0){
-            page = lastPage;
-            slideleft();
-        }else{
-            page --;
-            slideleft();
-};
+    // 次へボタンが押されたとき
+    $('.slideright').click(function(){
+        slideright(1);
     });
-    function slideleft(){
-        if( page === lastPage){
-            slideleft_Set(0,page);
-        }else{
-            cpage = page +1;
-            slideleft_Set(cpage,page);
+
+    $(document).on('click','.ball',function(){
+        var nextslide = $(".ball").index(this);
+        if (lastslide < nextslide){
+            i = nextslide - lastslide;
+            slideright(i);
+        }else if(lastslide > nextslide) {
+            i = lastslide - nextslide
+            slideleft(i);
         }
-    };
 
-    function slideleft_Set(lp,np){
-        $(".slideshow .slide").eq(lp).css({"z-index":5});
-        $(".slideshow .slide").eq(np).css({"z-index":10}).animate( { width: 'show'},1000 );
-        $(".slideball .ball").eq(lp).css({"cssText" : "background-color : aqua !important"});
-        $(".slideball .ball").eq(np).css({"cssText" : "background-color : red !important"});
-        setTimeout(function(){
-            $(".slideshow .slide").eq(lp).css("display","none");
-        },1000);
+    })
+
+    function slideright(count){
+        //li先頭要素のクローンを作成
+        var clone = $(".slideSet .slide:first").clone(true);
+        //li先頭要素のマージントップにマイナスを指定しアニメーションさせる
+        $(".slideSet .slide:first").animate({
+            marginLeft : "-800px"
+        }, {
+            duration : 500,
+            complete : function() {
+                //処理完了時に先頭要素を削除
+                $(".slideSet .slide:first").remove();
+                //クローンをliの最後に追加
+                clone.clone(true).insertAfter($(".slideSet .slide:last"));
+            }
+        });
     }
-
-
-    //（６）～秒間隔でイメージ切換の発火設定
-    var Timer;
-    function startTimer(){
-        Timer =setInterval(function(){
-            if(page === lastPage){
-                page =0;
-                slideRight();
-            }else{
-                page++;
-                slideRight();
-            };
-        },5000
-        );
-    }
-    //（７）～秒間隔でイメージ切換の停止設定
-    function stopTimer(){
-        clearInterval(Timer);
-    }
-    startTimer();
-
 });

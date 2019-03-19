@@ -6,12 +6,18 @@
             <h4>今週のおすすめ</h4>
             <a href="javascript:void(0);" class="slideleft">Left</a>
             <a href="javascript:void(0);" class="slideright">Right</a>
-            <div class="slideshow">
-                <div class ="slide">1</div>
-                <div class ="slide">2</div>
-                <div class ="slide">3</div>
+            <div class="slider">
+                <div class="slideSet">
+                    <div class ="slide" id="page1"></div>
+                    <div class ="slide" id="page2"></div>
+                    <div class ="slide" id="page3"></div>
+                    <div class ="slide" id="page4"></div>
+                    <div class ="slide" id="page5"></div>
+                </div>
             </div>
             <div class="slideball">
+                <div class ="ball"></div>
+                <div class ="ball"></div>
                 <div class ="ball"></div>
                 <div class ="ball"></div>
                 <div class ="ball"></div>
