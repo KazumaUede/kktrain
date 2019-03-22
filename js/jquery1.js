@@ -145,9 +145,9 @@ $(function(){
     //ボール色変更
     function ballcolor(){
         $.when(
-            $(".slideball .ball").css({"background-color" : "aqua"},)
+            $(".slideball .ball").css({"background-color" : "aqua"})
         ).done(function(){
-            $(".slideball .ball").eq(nextslide).css({"background-color" : "red"},);
+            $(".slideball .ball").eq(nextslide).css({"background-color" : "red"});
             lastslide = nextslide;
         });
     }
@@ -167,7 +167,6 @@ $(function(){
             for (var i = 0; count > i; i++){
                 $(".slide:first").remove();
             }
-        }).done(function(){
             ballselect();
             autoslide();
         });
@@ -191,11 +190,11 @@ $(function(){
         ).done(function(){
             $(".slideSet .slide:first").animate({
                 marginLeft : "0"
-            },500);
-        }).done(function(){
-            ballselect();
-            autoslide();
-        });
+            },500,function(){
+                ballselect();
+                autoslide();
+            });
+        })
     }
     //自動スライド送り
     function autoslide() {
