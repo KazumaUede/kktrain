@@ -121,6 +121,81 @@ section.fill_section:nth-child(1) .slideball .ball:active {
 
 section.fill_section:nth-child(2) {
   background-color: red;
+  display: flex;
+  padding: 200px 50px 0 50px;
+}
+
+section.fill_section:nth-child(2) a {
+  height: 120px;
+  width: 25px;
+  position: relative;
+  background-color: yellow;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+section.fill_section:nth-child(2) a:active {
+  box-shadow: none;
+}
+
+section.fill_section:nth-child(2) a.bannerleft {
+  margin-right: 5px;
+}
+
+section.fill_section:nth-child(2) a.bannerright {
+  margin-left: 5px;
+}
+
+section.fill_section:nth-child(2) .banners {
+  min-width: 605px;
+  width: 860px;
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  background-color: black;
+}
+
+section.fill_section:nth-child(2) .banners .bannerSet {
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+}
+
+section.fill_section:nth-child(2) .banners .banner {
+  min-height: 100px;
+  min-width: 250px;
+}
+
+section.fill_section:nth-child(2) .banners .banner:nth-child(1) {
+  margin-left: 50px;
+}
+
+section.fill_section:nth-child(2) .banners .banner:nth-child(2) {
+  margin: 0 5px;
+}
+
+section.fill_section:nth-child(2) .banners .banner:nth-child(3) {
+  margin-right: 50px;
+}
+
+section.fill_section:nth-child(2) .banners .banner#banner1 {
+  background-color: blue;
+}
+
+section.fill_section:nth-child(2) .banners .banner#banner2 {
+  background-color: green;
+}
+
+section.fill_section:nth-child(2) .banners .banner#banner3 {
+  background-color: purple;
+}
+
+section.fill_section:nth-child(2) .banners .banner#banner4 {
+  background-color: gray;
+}
+
+section.fill_section:nth-child(2) .banners .banner#banner5 {
+  background-color: orchid;
 }
 
 section.fill_section:nth-child(3) {

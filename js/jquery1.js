@@ -76,7 +76,7 @@ $(function(){
     var slideNum = $('.slide').length;
     var slideSetWidth = slideWidth * slideNum;
     var slideid = 0;
-    var lastslide = 0
+    var lastslide = 0;
     //2.並べる
     $('.slideSet').css('width', slideSetWidth);
     var click_flg = true;
@@ -115,7 +115,7 @@ $(function(){
                 i = nextslide - lastslide;
                 buttonaction(slideright(i),500);
             }else if(lastslide > nextslide) {
-                i = lastslide - nextslide
+                i = lastslide - nextslide;
                 buttonaction(slideleft(i),500);
             }
         }else {
@@ -160,7 +160,7 @@ $(function(){
         }
             var slidewidth = (-800 * count)+ 'px';
         $.when(
-            $(".slideSet .slide:first").animate({
+            $(".slide:first").animate({
                 marginLeft : slidewidth
             },500)
         ).done(function(){
@@ -180,7 +180,7 @@ $(function(){
             $.when(
                 $(".slide:last").clone(true).insertBefore($(".slide:first"))
             ).done(function(){
-                $(".slide:last").remove()
+                $(".slide:last").remove();
             });
         }
         $.when(
@@ -203,4 +203,87 @@ $(function(){
             }, 5000);
     }
     autoslide();
+
+    //バナー
+    var bannerFlug = true;
+    if($('.banner').length < 4){
+        $('.bannerleft').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
+        $('.bannerright').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
+    }
+
+    // 前へボタンが押されたとき
+    $('.bannerleft').click(function(){
+        if(click_flg){
+            buttonaction(toleftbanner(),500);
+        }else {
+            return false;
+        }
+    });
+    // 次へボタンが押されたとき
+    $('.bannerright').click(function(){
+        if(click_flg){
+            buttonaction(torightbanner(),500);
+        }else {
+            return false;
+        }
+    });
+    // リサイズ
+    $( window ).resize(function(){
+        if(!_scrollEvent){
+            _scrollEvent = setTimeout(function(){
+                _scrollEvent = null;
+                if($(".banners").width() <= 790){
+                    bannerFlug = false;
+                    $(".banner").eq(1).animate({
+                        margin : "0 300px 0 5px"
+                    },500)
+                }else{
+                    bannerFlug = true;
+                    $(".banner").eq(1).animate({
+                        margin : "0 5px 0 5px"
+                    },500)
+                }
+            }, 500);
+        }
+    });
+
+    //右バナー送り
+    function torightbanner(){
+            //li先頭要素のクローンを作成
+        for (var i = 0; 3 > i; i++){
+            $(".banner").eq(i).clone(true).insertAfter($(".banner:last"));
+        }
+            var slidewidth = (-295 * 3)+ 'px';
+        $.when(
+            $(".banner:first").animate({
+                marginLeft : slidewidth
+            },500)
+        ).done(function(){
+            for (var i = 0; 3 > i; i++){
+                $(".banner:first").remove();
+            }
+        });
+    }
+    //左スライド送り
+    function toleftbanner(){
+        var slidewidth = (295 * 3)+ 'px';
+        var banners = $('.banner').length - 1;
+        for (var i = 1; 4 > i; i++){
+            $(".banner").eq(banners).clone(true).insertBefore($(".banner:first"))
+        }
+        $.when(
+            $(".banner:first").animate({
+                marginLeft : "-" + slidewidth
+            },0)
+        ).done(function(){
+            $(".banner:first").animate({
+                marginLeft : "10"
+            },500,function(){
+                for (var i = 0; 3 > i; i++){
+                    $(".banner:last").remove();
+                }
+            })
+        })
+    }
+
 });
