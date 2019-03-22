@@ -7,7 +7,7 @@ $(function(){
     var _scrollEvent;
     var _scrollEvent2;
     var ballid = 0;
-    $(".slideball .ball").eq(0).css({"cssText" : "background-color : red !important"});
+    $(".slideball .ball").eq(0).css({"background-color" : "red"});
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
         $(".fill_section").eq(i).css({opacity: '0'});
@@ -75,45 +75,133 @@ $(function(){
     var slideWidth = $('.slide').outerWidth();
     var slideNum = $('.slide').length;
     var slideSetWidth = slideWidth * slideNum;
+    var slideid = 0;
+    var lastslide = 0
     //2.並べる
     $('.slideSet').css('width', slideSetWidth);
+    var click_flg = true;
+
 
     // 前へボタンが押されたとき
     $('.slideleft').click(function(){
-        slideCurrent--;
-        sliding();
+        if(click_flg){
+            buttonaction(slideleft(1),500);
+        }else {
+            return false;
+        }
     });
     // 次へボタンが押されたとき
     $('.slideright').click(function(){
-        slideright(1);
-    });
-
-    $(document).on('click','.ball',function(){
-        var nextslide = $(".ball").index(this);
-        if (lastslide < nextslide){
-            i = nextslide - lastslide;
-            slideright(i);
-        }else if(lastslide > nextslide) {
-            i = lastslide - nextslide
-            slideleft(i);
+        if(click_flg){
+            buttonaction(slideright(1),500);
+        }else {
+            return false;
         }
-
+    });
+    // 各ボタンストッパー
+    function buttonaction(actionFuction,time){
+        click_flg = false;
+        //実行内容
+        actionFuction
+        setTimeout(function(){
+            click_flg = true;
+        },time)
+    }
+    // ボールジャンプ
+    $(document).on('click','.ball',function(){
+        if(click_flg){
+            var nextslide = $(".ball").index(this);
+            if (lastslide < nextslide){
+                i = nextslide - lastslide;
+                buttonaction(slideright(i),500);
+            }else if(lastslide > nextslide) {
+                i = lastslide - nextslide
+                buttonaction(slideleft(i),500);
+            }
+        }else {
+            return false;
+        }
     })
-
-    function slideright(count){
-        //li先頭要素のクローンを作成
-        var clone = $(".slideSet .slide:first").clone(true);
-        //li先頭要素のマージントップにマイナスを指定しアニメーションさせる
-        $(".slideSet .slide:first").animate({
-            marginLeft : "-800px"
-        }, {
-            duration : 500,
-            complete : function() {
-                //処理完了時に先頭要素を削除
-                $(".slideSet .slide:first").remove();
-                //クローンをliの最後に追加
-                clone.clone(true).insertAfter($(".slideSet .slide:last"));
-            }
+    //色を変更するボールを選択
+    function ballselect(){
+        switch ($('.slideSet .slide:first').attr('id')) {
+            case 'page1':
+                nextslide = 0;
+                break;
+            case 'page2':
+                nextslide = 1;
+                break;
+            case 'page3':
+                nextslide = 2;
+                break;
+            case 'page4':
+                nextslide = 3;
+                break;
+            case 'page5':
+                nextslide = 4;
+        }
+        ballcolor();
+    }
+    //ボール色変更
+    function ballcolor(){
+        $.when(
+            $(".slideball .ball").css({"background-color" : "aqua"},)
+        ).done(function(){
+            $(".slideball .ball").eq(nextslide).css({"background-color" : "red"},);
+            lastslide = nextslide;
         });
     }
+    //右スライド送り
+    function slideright(count){
+        clearTimeout(timer)
+            //li先頭要素のクローンを作成
+        for (var i = 0; count > i; i++){
+            $(".slide").eq(i).clone(true).insertAfter($(".slide:last"));
+        }
+            var slidewidth = (-800 * count)+ 'px';
+        $.when(
+            $(".slideSet .slide:first").animate({
+                marginLeft : slidewidth
+            },500)
+        ).done(function(){
+            for (var i = 0; count > i; i++){
+                $(".slide:first").remove();
+            }
+        }).done(function(){
+            ballselect();
+            autoslide();
+        });
+
+    }
+    //左スライド送り
+    function slideleft(count){
+        clearTimeout(timer)
+        var slidewidth = (800 * count)+ 'px';
+        for (var i = 0; count > i; i++){
+            $.when(
+                $(".slide:last").clone(true).insertBefore($(".slide:first"))
+            ).done(function(){
+                $(".slide:last").remove()
+            });
+        }
+        $.when(
+            $(".slideSet .slide:first").animate({
+                marginLeft : "-" + slidewidth
+            },0)
+        ).done(function(){
+            $(".slideSet .slide:first").animate({
+                marginLeft : "0"
+            },500);
+        }).done(function(){
+            ballselect();
+            autoslide();
+        });
+    }
+    //自動スライド送り
+    function autoslide() {
+        timer = setTimeout(function(){
+            buttonaction(slideright(1),500);
+            }, 5000);
+    }
+    autoslide();
 });

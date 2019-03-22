@@ -60,6 +60,7 @@ section.fill_section:nth-child(1) a.slideright {
 section.fill_section:nth-child(1) .slider {
   width: 800px;
   height: 600px;
+  overflow: hidden;
   margin: 100px auto;
   position: relative;
 }
@@ -70,8 +71,9 @@ section.fill_section:nth-child(1) .slider .slideSet {
 }
 
 section.fill_section:nth-child(1) .slider .slide {
-  width: 800px;
   height: 600px;
+  min-width: 800px;
+  max-width: 800px;
 }
 
 section.fill_section:nth-child(1) .slider .slide#page1 {
@@ -105,6 +107,7 @@ section.fill_section:nth-child(1) .slideball {
 }
 
 section.fill_section:nth-child(1) .slideball .ball {
+  margin: 5px 0 0 10px;
   height: 40px;
   width: 40px;
   background-color: aqua;
