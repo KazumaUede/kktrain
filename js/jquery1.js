@@ -207,29 +207,34 @@ $(function(){
 
 
 $(function(){
+    var _resizeEvent;
     bannerResize();
     $(window).on('resize',function(){
         bannerResize();
     });
     function bannerResize(){
-        console.log("aaa");
-        var banners_w = $('.banners').width();
-        var banner_w = 250;
-        var banner_margin = 5;
-        var banner_Number = Math.floor(banners_w / (banner_w + banner_margin))
-        var banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
-        // console.log(banner_Number);
-        // console.log(banners_padding);
-        $('.banner').eq(0).animate({
-            marginLeft : banners_padding  + 'px'
-        })
-        for (var i = 0; banner_Number -1 > i; i++){
-            $('.banner').eq(i).animate({
-                marginRight : banner_margin  + 'px'
-            })
+        if(!_resizeEvent){
+            _resizeEvent = setTimeout(function(){
+                _resizeEvent = null;
+                console.log("aaa");
+                var banners_w = $('.banners').width();
+                var banner_w = 250;
+                var banner_margin = 5;
+                var banner_Number = Math.floor(banners_w / (banner_w + banner_margin))
+                var banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
+                $('.banner').eq(0).animate({
+                    marginLeft : banners_padding  + 'px'
+                },100)
+                for (var i = 0; banner_Number -1 > i; i++){
+                    $('.banner').eq(i).animate({
+                        marginRight : banner_margin  + 'px'
+                    },100)
+                }
+                $('.banner').eq(banner_Number -1).animate({
+                    marginRight : (banners_padding + 100)  + 'px'
+                },100)
+            },200);
         }
-        $('.banner').eq(banner_Number -1).animate({
-            marginRight : banners_padding + 'px'
-        })
+
     }
 });
