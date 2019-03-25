@@ -258,7 +258,6 @@ $(function(){
             $(".banner:first").animate({
                 marginLeft : slidewidth
             },500)
-            
         ).done(function(){
             for (var i = 0; 3 > i; i++){
                 $(".banner:first").remove();
