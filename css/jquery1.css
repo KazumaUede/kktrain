@@ -150,7 +150,6 @@ section.fill_section:nth-child(2) .banners {
   min-width: 605px;
   width: 860px;
   height: 120px;
-  overflow: hidden;
   position: relative;
   background-color: black;
 }

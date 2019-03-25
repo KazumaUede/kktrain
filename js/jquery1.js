@@ -258,6 +258,7 @@ $(function(){
             $(".banner:first").animate({
                 marginLeft : slidewidth
             },500)
+            
         ).done(function(){
             for (var i = 0; 3 > i; i++){
                 $(".banner:first").remove();
@@ -271,11 +272,11 @@ $(function(){
         for (var i = 1; 4 > i; i++){
             $(".banner").eq(banners).clone(true).insertBefore($(".banner:first"))
         }
-        $.when(
+
             $(".banner:first").animate({
                 marginLeft : "-" + slidewidth
             },0)
-        ).done(function(){
+
             $(".banner:first").animate({
                 marginLeft : "10"
             },500,function(){
@@ -283,7 +284,7 @@ $(function(){
                     $(".banner:last").remove();
                 }
             })
-        })
+
     }
 
 });
