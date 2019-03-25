@@ -216,25 +216,32 @@ $(function(){
         if(!_resizeEvent){
             _resizeEvent = setTimeout(function(){
                 _resizeEvent = null;
-                console.log("aaa");
                 var banners_w = $('.banners').width();
                 var banner_w = 250;
                 var banner_margin = 5;
-                var banner_Number = Math.floor(banners_w / (banner_w + banner_margin))
+                var banner_Number = Math.floor(banners_w / (banner_w + banner_margin));
                 var banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
-                $('.banner').eq(0).animate({
-                    marginLeft : banners_padding  + 'px'
-                },100)
-                for (var i = 0; banner_Number -1 > i; i++){
-                    $('.banner').eq(i).animate({
-                        marginRight : banner_margin  + 'px'
-                    },100)
+                for (var i = 0; i < $('.banner').length; i++){
+                    if( banner_Number === 0 ){
+                        $('.banner').eq(i).css({
+                            marginLeft : 0,
+                            marginRight: 0
+                        },100);
+                    }else{
+                        $('.banner').eq(i).css({
+                            marginLeft  : ((i % banner_Number === 0) ? banners_padding : 0),
+                            marginRight : ((i % banner_Number === banner_Number -1) ? banners_padding : banner_margin )
+                        });
+                    }
                 }
-                $('.banner').eq(banner_Number -1).animate({
-                    marginRight : (banners_padding + 100)  + 'px'
-                },100)
             },200);
         }
-
     }
+
+    $(document).on('click', '.bannerright',function(){
+        $('.float').addClass('move-r');
+    })
+
+
+
 });

@@ -115,32 +115,42 @@ section.fill_section{
         .banners{
             height: 120px;
             width: calc(100% - 60px);
-            // overflow: hidden;
+            overflow: hidden;
             position: relative;
             background-color: black;
             box-sizing: border-box;
-            display: flex;
+            display: block;
             padding: 10px 0;
-            .banner{
-                height: 100px;
-                min-width: 250px;
-                background-color: white;
-                &#banner1{
-                    background-color: blue;
+            .float{
+                display: flex;
+                transform: translateX(0);
+                &.move-r{
+                    transform: translateX(-100%);
+                    transition: .25s transform;
                 }
-                &#banner2{
-                    background-color: green;
-                }
-                &#banner3{
-                    background-color: purple;
-                }
-                &#banner4{
-                    background-color: gray;
-                }
-                &#banner5{
-                    background-color: orchid;
+                .banner{
+                    height: 100px;
+                    min-width: 250px;
+                    background-color: white;
+                    transition: .1s margin;
+                    &#banner1{
+                        background-color: blue;
+                    }
+                    &#banner2{
+                        background-color: green;
+                    }
+                    &#banner3{
+                        background-color: purple;
+                    }
+                    &#banner4{
+                        background-color: gray;
+                    }
+                    &#banner5{
+                        background-color: orchid;
+                    }
                 }
             }
+
         }
 
     }

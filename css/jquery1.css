@@ -149,36 +149,48 @@ section.fill_section:nth-child(2) a.bannerright {
 section.fill_section:nth-child(2) .banners {
   height: 120px;
   width: calc(100% - 60px);
+  overflow: hidden;
   position: relative;
   background-color: black;
   box-sizing: border-box;
-  display: flex;
+  display: block;
   padding: 10px 0;
 }
 
-section.fill_section:nth-child(2) .banners .banner {
+section.fill_section:nth-child(2) .banners .float {
+  display: flex;
+  transform: translateX(0);
+}
+
+section.fill_section:nth-child(2) .banners .float.move-r {
+  transform: translateX(-100%);
+  transition: .25s transform;
+}
+
+section.fill_section:nth-child(2) .banners .float .banner {
   height: 100px;
   min-width: 250px;
   background-color: white;
+  transition: .1s margin;
 }
 
-section.fill_section:nth-child(2) .banners .banner#banner1 {
+section.fill_section:nth-child(2) .banners .float .banner#banner1 {
   background-color: blue;
 }
 
-section.fill_section:nth-child(2) .banners .banner#banner2 {
+section.fill_section:nth-child(2) .banners .float .banner#banner2 {
   background-color: green;
 }
 
-section.fill_section:nth-child(2) .banners .banner#banner3 {
+section.fill_section:nth-child(2) .banners .float .banner#banner3 {
   background-color: purple;
 }
 
-section.fill_section:nth-child(2) .banners .banner#banner4 {
+section.fill_section:nth-child(2) .banners .float .banner#banner4 {
   background-color: gray;
 }
 
-section.fill_section:nth-child(2) .banners .banner#banner5 {
+section.fill_section:nth-child(2) .banners .float .banner#banner5 {
   background-color: orchid;
 }
 
