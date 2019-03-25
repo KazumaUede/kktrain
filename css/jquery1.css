@@ -147,34 +147,19 @@ section.fill_section:nth-child(2) a.bannerright {
 }
 
 section.fill_section:nth-child(2) .banners {
-  min-width: 605px;
-  width: 860px;
   height: 120px;
+  width: calc(100% - 60px);
   position: relative;
   background-color: black;
-}
-
-section.fill_section:nth-child(2) .banners .bannerSet {
-  margin-top: 10px;
-  position: relative;
+  box-sizing: border-box;
   display: flex;
+  padding: 10px 0;
 }
 
 section.fill_section:nth-child(2) .banners .banner {
-  min-height: 100px;
+  height: 100px;
   min-width: 250px;
-}
-
-section.fill_section:nth-child(2) .banners .banner:nth-child(1) {
-  margin-left: 50px;
-}
-
-section.fill_section:nth-child(2) .banners .banner:nth-child(2) {
-  margin: 0 5px;
-}
-
-section.fill_section:nth-child(2) .banners .banner:nth-child(3) {
-  margin-right: 50px;
+  background-color: white;
 }
 
 section.fill_section:nth-child(2) .banners .banner#banner1 {

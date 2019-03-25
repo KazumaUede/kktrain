@@ -113,29 +113,18 @@ section.fill_section{
             }
         }
         .banners{
-            min-width: 605px;
-            width: 860px;
             height: 120px;
+            width: calc(100% - 60px);
             // overflow: hidden;
             position: relative;
             background-color: black;
-            .bannerSet {
-                margin-top: 10px;
-                position: relative;
-                display: flex;
-            }
+            box-sizing: border-box;
+            display: flex;
+            padding: 10px 0;
             .banner{
-                min-height: 100px;
+                height: 100px;
                 min-width: 250px;
-                &:nth-child(1){
-                    margin-left:50px;
-                }
-                &:nth-child(2){
-                    margin:0 5px;
-                }
-                &:nth-child(3){
-                    margin-right: 50px;
-                }
+                background-color: white;
                 &#banner1{
                     background-color: blue;
                 }

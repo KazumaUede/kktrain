@@ -203,139 +203,33 @@ $(function(){
             }, 5000);
     }
     autoslide();
+});
 
-    //バナー
-    var bannerFlug = true;
-    if($('.banner').length < 4){
-        $('.bannerleft').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
-        $('.bannerright').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
-    }
 
-    // 前へボタンが押されたとき
-    $('.bannerleft').click(function(){
-        if(click_flg){
-            buttonaction(toleftbanner(),500);
-        }else {
-            return false;
-        }
+$(function(){
+    bannerResize();
+    $(window).on('resize',function(){
+        bannerResize();
     });
-    // 次へボタンが押されたとき
-    $('.bannerright').click(function(){
-        if(click_flg){
-            buttonaction(torightbanner(),500);
-        }else {
-            return false;
+    function bannerResize(){
+        console.log("aaa");
+        var banners_w = $('.banners').width();
+        var banner_w = 250;
+        var banner_margin = 5;
+        var banner_Number = Math.floor(banners_w / (banner_w + banner_margin))
+        var banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
+        // console.log(banner_Number);
+        // console.log(banners_padding);
+        $('.banner').eq(0).animate({
+            marginLeft : banners_padding  + 'px'
+        })
+        for (var i = 0; banner_Number -1 > i; i++){
+            $('.banner').eq(i).animate({
+                marginRight : banner_margin  + 'px'
+            })
         }
-    });
-    // リサイズ
-    $( window ).resize(function(){
-        if(!_scrollEvent){
-            _scrollEvent = setTimeout(function(){
-                _scrollEvent = null;
-                if($(".banners").width() <= 790){
-                    bannerFlug = false;
-                    $(".banner").eq(1).animate({
-                        margin : "0 300px 0 5px"
-                    },500)
-                }else{
-                    bannerFlug = true;
-                    $(".banner").eq(1).animate({
-                        margin : "0 5px 0 5px"
-                    },500)
-                }
-            }, 500);
-        }
-    });
-
-    //右バナー送り
-    function torightbanner(){
-            //li先頭要素のクローンを作成
-        for (var i = 0; 3 > i; i++){
-            $(".banner").eq(i).clone(true).insertAfter($(".banner:last"));
-        }
-        var slidewidth = (-860 + 50)+ 'px';
-        $.when(
-            $(".banner:first").animate({
-                marginLeft : slidewidth
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-            ,$(".banner").eq(3).animate({
-                marginLeft : 50,
-                marginRight : 0
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-            ,$(".banner").eq(4).animate({
-                marginLeft : 5 ,
-                marginRight : 5
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-            ,$(".banner").eq(5).animate({
-                marginLeft : 0 ,
-                marginRight : 50
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-        ).done(function(){
-            for (var i = 0; 3 > i; i++){
-                $(".banner:first").remove();
-            }
-        });
+        $('.banner').eq(banner_Number -1).animate({
+            marginRight : banners_padding + 'px'
+        })
     }
-    //左スライド送り
-    function toleftbanner(){
-        var slidewidth = (295 * 3)+ 'px';
-        var banners = $('.banner').length - 1;
-        for (var i = 1; 4 > i; i++){
-            $(".banner").eq(banners).clone(true).insertBefore($(".banner:first"))
-        }
-
-        $.when(
-            $(".banner:first").animate({
-                marginLeft : "-" + slidewidth
-            },{
-                duration: 0,
-                queue: false
-            })
-            ,$(".banner:first").animate({
-                marginLeft : 50 ,
-                marginRight : 0
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-            ,$(".banner").eq(1).animate({
-                marginLeft : 5 ,
-                marginRight : 5
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-            ,$(".banner").eq(2).animate({
-                marginLeft : 0 ,
-                marginRight : 50
-            },
-            {
-                duration: 500,
-                queue: false
-            })
-        ).done(function(){
-            for (var i = 0; 3 > i; i++){
-                $(".banner:last").remove();
-            }
-        });
-    }
-
 });
