@@ -300,18 +300,42 @@ $(function(){
             $(".banner").eq(banners).clone(true).insertBefore($(".banner:first"))
         }
 
+        $.when(
             $(".banner:first").animate({
                 marginLeft : "-" + slidewidth
-            },0)
-
-            $(".banner:first").animate({
-                marginLeft : "10"
-            },500,function(){
-                for (var i = 0; 3 > i; i++){
-                    $(".banner:last").remove();
-                }
+            },{
+                duration: 0,
+                queue: false
             })
-
+            ,$(".banner:first").animate({
+                marginLeft : 50 ,
+                marginRight : 0
+            },
+            {
+                duration: 500,
+                queue: false
+            })
+            ,$(".banner").eq(1).animate({
+                marginLeft : 5 ,
+                marginRight : 5
+            },
+            {
+                duration: 500,
+                queue: false
+            })
+            ,$(".banner").eq(2).animate({
+                marginLeft : 0 ,
+                marginRight : 50
+            },
+            {
+                duration: 500,
+                queue: false
+            })
+        ).done(function(){
+            for (var i = 0; 3 > i; i++){
+                $(".banner:last").remove();
+            }
+        });
     }
 
 });
