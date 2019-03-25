@@ -253,11 +253,39 @@ $(function(){
         for (var i = 0; 3 > i; i++){
             $(".banner").eq(i).clone(true).insertAfter($(".banner:last"));
         }
-            var slidewidth = (-295 * 3)+ 'px';
+        var slidewidth = (-860 + 50)+ 'px';
         $.when(
             $(".banner:first").animate({
                 marginLeft : slidewidth
-            },500)
+            },
+            {
+                duration: 500,
+                queue: false
+            })
+            ,$(".banner").eq(3).animate({
+                marginLeft : 50,
+                marginRight : 0
+            },
+            {
+                duration: 500,
+                queue: false
+            })
+            ,$(".banner").eq(4).animate({
+                marginLeft : 5 ,
+                marginRight : 5
+            },
+            {
+                duration: 500,
+                queue: false
+            })
+            ,$(".banner").eq(5).animate({
+                marginLeft : 0 ,
+                marginRight : 50
+            },
+            {
+                duration: 500,
+                queue: false
+            })
         ).done(function(){
             for (var i = 0; 3 > i; i++){
                 $(".banner:first").remove();

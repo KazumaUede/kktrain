@@ -7,7 +7,7 @@ $(function(){
     var _scrollEvent;
     var _scrollEvent2;
     var ballid = 0;
-    $(".slideball .ball").eq(0).css({"cssText" : "background-color : red !important"});
+    $(".slideball .ball").eq(0).css({"background-color" : "red"});
     while (i< 4){
         section_top[i] = $(".fill_section").eq(i).offset().top;
         $(".fill_section").eq(i).css({opacity: '0'});
@@ -75,6 +75,8 @@ $(function(){
     var slideWidth = $('.slide').outerWidth();
     var slideNum = $('.slide').length;
     var slideSetWidth = slideWidth * slideNum;
+    var slideid = 0;
+    var lastslide = 0;
     //2.並べる
     $('.slideSet').css('width', slideSetWidth);
     var click_flg = true;
@@ -83,7 +85,7 @@ $(function(){
     // 前へボタンが押されたとき
     $('.slideleft').click(function(){
         if(click_flg){
-            buttonaction(slideleft(2),500);
+            buttonaction(slideleft(1),500);
         }else {
             return false;
         }
@@ -96,8 +98,8 @@ $(function(){
             return false;
         }
     });
-
-    function getid(actionFuction,time){
+    // 各ボタンストッパー
+    function buttonaction(actionFuction,time){
         click_flg = false;
         //実行内容
         actionFuction
@@ -105,54 +107,80 @@ $(function(){
             click_flg = true;
         },time)
     }
-
-
-    function buttonaction(){
-        click_flg = false;
-        //実行内容
-        actionFuction
-        setTimeout(function(){
-            click_flg = true;
-        },time)
-    }
-
+    // ボールジャンプ
     $(document).on('click','.ball',function(){
-        var nextslide = $(".ball").index(this);
-        if (lastslide < nextslide){
-            i = nextslide - lastslide;
-            slideright(i);
-        }else if(lastslide > nextslide) {
-            i = lastslide - nextslide
-            slideleft(i);
+        if(click_flg){
+            var nextslide = $(".ball").index(this);
+            if (lastslide < nextslide){
+                i = nextslide - lastslide;
+                buttonaction(slideright(i),500);
+            }else if(lastslide > nextslide) {
+                i = lastslide - nextslide;
+                buttonaction(slideleft(i),500);
+            }
+        }else {
+            return false;
         }
-
     })
-    // 右スライド
+    //色を変更するボールを選択
+    function ballselect(){
+        switch ($('.slideSet .slide:first').attr('id')) {
+            case 'page1':
+                nextslide = 0;
+                break;
+            case 'page2':
+                nextslide = 1;
+                break;
+            case 'page3':
+                nextslide = 2;
+                break;
+            case 'page4':
+                nextslide = 3;
+                break;
+            case 'page5':
+                nextslide = 4;
+        }
+        ballcolor();
+    }
+    //ボール色変更
+    function ballcolor(){
+        $.when(
+            $(".slideball .ball").css({"background-color" : "aqua"})
+        ).done(function(){
+            $(".slideball .ball").eq(nextslide).css({"background-color" : "red"});
+            lastslide = nextslide;
+        });
+    }
+    //右スライド送り
     function slideright(count){
+        clearTimeout(timer)
             //li先頭要素のクローンを作成
         for (var i = 0; count > i; i++){
             $(".slide").eq(i).clone(true).insertAfter($(".slide:last"));
         }
             var slidewidth = (-800 * count)+ 'px';
-        $(".slideSet .slide:first").animate({
-            marginLeft : slidewidth
-        }, {
-            duration : 500,
-            complete : function() {
-                for (var i = 0; count > i; i++){
-                    $(".slide:first").remove();
-                }
+        $.when(
+            $(".slide:first").animate({
+                marginLeft : slidewidth
+            },500)
+        ).done(function(){
+            for (var i = 0; count > i; i++){
+                $(".slide:first").remove();
             }
+            ballselect();
+            autoslide();
         });
+
     }
-    // 左スライド
+    //左スライド送り
     function slideleft(count){
+        clearTimeout(timer)
         var slidewidth = (800 * count)+ 'px';
         for (var i = 0; count > i; i++){
             $.when(
-                $(".slide:last").eq(i).clone(true).insertBefore($(".slide:first"))
+                $(".slide:last").clone(true).insertBefore($(".slide:first"))
             ).done(function(){
-                $(".slide:last").remove()
+                $(".slide:last").remove();
             });
         }
         $.when(
@@ -162,7 +190,130 @@ $(function(){
         ).done(function(){
             $(".slideSet .slide:first").animate({
                 marginLeft : "0"
-            },500);
+            },500,function(){
+                ballselect();
+                autoslide();
+            });
+        })
+    }
+    //自動スライド送り
+    function autoslide() {
+        timer = setTimeout(function(){
+            buttonaction(slideright(1),500);
+            }, 5000);
+    }
+    autoslide();
+
+    //バナー
+    var bannerFlug = true;
+    if($('.banner').length < 4){
+        $('.bannerleft').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
+        $('.bannerright').stop().animate( { opacity: 'hide',}, { duration: fadeSpeed, easing: 'swing' } );
+    }
+
+    // 前へボタンが押されたとき
+    $('.bannerleft').click(function(){
+        if(click_flg){
+            buttonaction(toleftbanner(),500);
+        }else {
+            return false;
+        }
+    });
+    // 次へボタンが押されたとき
+    $('.bannerright').click(function(){
+        if(click_flg){
+            buttonaction(torightbanner(),500);
+        }else {
+            return false;
+        }
+    });
+    // リサイズ
+    $( window ).resize(function(){
+        if(!_scrollEvent){
+            _scrollEvent = setTimeout(function(){
+                _scrollEvent = null;
+                if($(".banners").width() <= 790){
+                    bannerFlug = false;
+                    $(".banner").eq(1).animate({
+                        margin : "0 300px 0 5px"
+                    },500)
+                }else{
+                    bannerFlug = true;
+                    $(".banner").eq(1).animate({
+                        margin : "0 5px 0 5px"
+                    },500)
+                }
+            }, 500);
+        }
+    });
+
+    //右バナー送り
+    function torightbanner(){
+            //li先頭要素のクローンを作成
+        for (var i = 0; 3 > i; i++){
+            $(".banner").eq(i).clone(true).insertAfter($(".banner:last"));
+        }
+            var slidewidth = (-860 + 100)+ 'px';
+        $.when(
+            $(".banner:first").animate({
+                marginLeft : slidewidth
+            },
+            {
+                duration: 500,
+                queue: false
+            }),function(){
+                $(".banner").eq(3).animate({
+                    marginLeft : 50
+                },
+                {
+                    duration: 500,
+                    queue: false
+                })
+            },function(){
+                $(".banner").eq(4).animate({
+                    marginLeft : 5 ,
+                    marginRight : 5
+                },
+                {
+                    duration: 500,
+                    queue: false
+                })
+            },function(){
+                $(".banner").eq(5).animate({
+                    marginRight : 50
+                },
+                {
+                    duration: 500,
+                    queue: false
+                })
+            }
+
+        ).done(function(){
+            for (var i = 0; 3 > i; i++){
+                $(".banner:first").remove();
+            }
         });
     }
+    //左スライド送り
+    function toleftbanner(){
+        var slidewidth = (295 * 3)+ 'px';
+        var banners = $('.banner').length - 1;
+        for (var i = 1; 4 > i; i++){
+            $(".banner").eq(banners).clone(true).insertBefore($(".banner:first"))
+        }
+
+            $(".banner:first").animate({
+                marginLeft : "-" + slidewidth
+            },0)
+
+            $(".banner:first").animate({
+                marginLeft : "10"
+            },500,function(){
+                for (var i = 0; 3 > i; i++){
+                    $(".banner:last").remove();
+                }
+            })
+
+    }
+
 });
