@@ -149,7 +149,6 @@ section.fill_section:nth-child(2) a.bannerright {
 section.fill_section:nth-child(2) .banners {
   height: 120px;
   width: calc(100% - 60px);
-  overflow: hidden;
   position: relative;
   background-color: black;
   box-sizing: border-box;

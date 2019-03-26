@@ -70,7 +70,8 @@ $(function(){
         $('html, body').stop().animate({scrollTop:section_top[index]},fadeSpeed,'swing')
     });
 
-    //スライダー
+//スライダー-------------------------------------------------------------------------
+
     //1.スライドの長さを測る
     var slideWidth = $('.slide').outerWidth();
     var slideNum = $('.slide').length;
@@ -205,9 +206,18 @@ $(function(){
     autoslide();
 });
 
+//バナー-------------------------------------------------------------------------
 
 $(function(){
     var _resizeEvent;
+    var banners_w;
+    var banner_w = 250;
+    var banner_margin = 5;
+    var banner_Number;
+    var banners_padding;
+    var click_flg = true;
+
+    //バナーリサイズ
     bannerResize();
     $(window).on('resize',function(){
         bannerResize();
@@ -216,11 +226,9 @@ $(function(){
         if(!_resizeEvent){
             _resizeEvent = setTimeout(function(){
                 _resizeEvent = null;
-                var banners_w = $('.banners').width();
-                var banner_w = 250;
-                var banner_margin = 5;
-                var banner_Number = Math.floor(banners_w / (banner_w + banner_margin));
-                var banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
+                banners_w = $('.banners').width();
+                banner_Number = Math.floor(banners_w / (banner_w + banner_margin));
+                banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
                 for (var i = 0; i < $('.banner').length; i++){
                     if( banner_Number === 0 ){
                         $('.banner').eq(i).css({
@@ -234,14 +242,30 @@ $(function(){
                         });
                     }
                 }
+                return;
             },200);
         }
     }
-
+    //バナー右送り
     $(document).on('click', '.bannerright',function(){
-        $('.float').addClass('move-r');
+        if(click_flg){
+            click_flg = false;
+            for (var i = 0; i < banner_Number ; i++){
+                $(".banner").eq(i).clone(true).insertAfter($(".banner:last"));
+            };
+            bannerResize();
+            $('.float').addClass('move-r');
+            setTimeout(function(){
+                for (var i = 0; i < banner_Number ; i++){
+                    $(".banner:first").remove();
+                };
+                $('.float').removeClass('move-r');
+                click_flg = true;
+                }
+            ,300)
+        }else {
+            return false;
+        }
     })
-
-
 
 });
