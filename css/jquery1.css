@@ -149,6 +149,7 @@ section.fill_section:nth-child(2) a.bannerright {
 section.fill_section:nth-child(2) .banners {
   height: 120px;
   width: calc(100% - 60px);
+  overflow: hidden;
   position: relative;
   background-color: black;
   box-sizing: border-box;
@@ -163,6 +164,16 @@ section.fill_section:nth-child(2) .banners .float {
 
 section.fill_section:nth-child(2) .banners .float.move-r {
   transform: translateX(-100%);
+  transition: .25s transform;
+}
+
+section.fill_section:nth-child(2) .banners .float.move-n {
+  transform: translateX(-100%);
+  transition: 0s transform;
+}
+
+section.fill_section:nth-child(2) .banners .float.move-n.move-l {
+  transform: translateX(0%);
   transition: .25s transform;
 }
 

@@ -211,10 +211,12 @@ $(function(){
 $(function(){
     var _resizeEvent;
     var banners_w;
+    var banners_items = $(".banner").length - 1;
     var banner_w = 250;
     var banner_margin = 5;
     var banner_Number;
     var banners_padding;
+    var banners_translateX = "%";
     var click_flg = true;
 
     //バナーリサイズ
@@ -234,7 +236,7 @@ $(function(){
                         $('.banner').eq(i).css({
                             marginLeft : 0,
                             marginRight: 0
-                        },100);
+                        },5);
                     }else{
                         $('.banner').eq(i).css({
                             marginLeft  : ((i % banner_Number === 0) ? banners_padding : 0),
@@ -254,7 +256,9 @@ $(function(){
                 $(".banner").eq(i).clone(true).insertAfter($(".banner:last"));
             };
             bannerResize();
-            $('.float').addClass('move-r');
+            setTimeout(function(){
+                $('.float').addClass('move-r');
+            },100)
             setTimeout(function(){
                 for (var i = 0; i < banner_Number ; i++){
                     $(".banner:first").remove();
@@ -267,5 +271,32 @@ $(function(){
             return false;
         }
     })
+
+    //バナー左送り
+    $(document).on('click', '.bannerleft',function(){
+        if(click_flg){
+            click_flg = false;
+            for (var i = 0; i < banner_Number ; i++){
+                $(".banner").eq(banners_items).clone(true).insertBefore($(".banner:first"));
+            };
+            bannerResize();
+            $('.float').addClass('move-n');
+            setTimeout(function(){
+                $('.float').addClass('move-l');
+            },100)
+            setTimeout(function(){
+                $('.float').removeClass('move-n');
+                $('.float').removeClass('move-l');
+                for (var i = 0; i < banner_Number ; i++){
+                    $(".banner:last").remove();
+                };
+                click_flg = true;
+                }
+            ,300);
+        }else {
+            return false;
+        }
+    })
+
 
 });
