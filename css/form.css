@@ -74,18 +74,7 @@
   margin-bottom: 15px;
 }
 
-.container form select {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 15px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
-}
-
-.container form button {
+.container form input[type="submit"] {
   display: block;
   width: 100px;
   margin-bottom: 10px;
@@ -97,6 +86,17 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
-.container form button:active {
+.container form input[type="submit"]:active {
   box-shadow: none;
+}
+
+.container form input select {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
 }
