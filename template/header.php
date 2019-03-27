@@ -25,9 +25,9 @@
 			</li>
 			<li>
 				<h5>JavaScript</h5>
-				<a href="./jquery1.php">jquery1</a>
-				<a href="">非同期</a>
-				<a href="">配置</a>
+				<a href="./jquery1.php">jquery</a>
+				<a href="./jquery2.php">ajax</a>
+				<a href="./jquery3.php">フォーム</a>
 			</li>
 		</ul>
 	</nav>

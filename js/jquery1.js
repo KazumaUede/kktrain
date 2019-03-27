@@ -211,13 +211,17 @@ $(function(){
 $(function(){
     var _resizeEvent;
     var banners_w;
-    var banners_items = $(".banner").length - 1;
+    var banners_items = $(".banner").length;
     var banner_w = 250;
     var banner_margin = 5;
     var banner_Number;
     var banners_padding;
     var banners_translateX = "%";
     var click_flg = true;
+    //バナーの数に応じて幅の上限値を設定
+    $('.banners').css({
+        "max-width" : (banner_w + banner_margin) * banners_items + 100 + "px"
+    })
 
     //バナーリサイズ
     bannerResize();
@@ -231,6 +235,14 @@ $(function(){
                 banners_w = $('.banners').width();
                 banner_Number = Math.floor(banners_w / (banner_w + banner_margin));
                 banners_padding = (banners_w - banner_w * banner_Number -(banner_margin * (banner_Number - 1))) / 2;
+                // 左右のボタンの表示設定
+                if (banners_items === banner_Number){
+                    $('.bannerleft').hide();
+                    $('.bannerright').hide();
+                }else{
+                    $('.bannerleft').show();
+                    $('.bannerright').show();
+                }
                 for (var i = 0; i < $('.banner').length; i++){
                     if( banner_Number === 0 ){
                         $('.banner').eq(i).css({
@@ -277,7 +289,7 @@ $(function(){
         if(click_flg){
             click_flg = false;
             for (var i = 0; i < banner_Number ; i++){
-                $(".banner").eq(banners_items).clone(true).insertBefore($(".banner:first"));
+                $(".banner").eq(banners_items -1).clone(true).insertBefore($(".banner:first"));
             };
             bannerResize();
             $('.float').addClass('move-n');

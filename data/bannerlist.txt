@@ -1,0 +1,7 @@
+バナー1	red
+バナー2	blue
+バナー3	green
+w
+バナー4	yellow
+バナー5	orange
+

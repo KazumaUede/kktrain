@@ -28,16 +28,30 @@
                 <a href="javascript:void(0);" class="bannerleft">Left</a>
                 <div class="banners">
                     <div class ="float">
-                        <div class ="banner" id="banner1">バナー1</div>
-                        <div class ="banner" id="banner2">バナー2</div>
-                        <div class ="banner" id="banner3">バナー3</div>
-                        <div class ="banner" id="banner4">バナー4</div>
-                        <div class ="banner" id="banner5">バナー5</div>
-                        <div class ="banner" id="banner6">バナー6</div>
-                        <div class ="banner" id="banner7">バナー7</div>
-                        <div class ="banner" id="banner8">バナー8</div>
-                        <div class ="banner" id="banner9">バナー9</div>
-                        <div class ="banner" id="banner10">バナー10</div>
+						<?php
+							if(!($data = @file_get_contents("data/bannerlist.txt"))){
+								echo '読み込み失敗';
+							}
+							$data = explode( "\n", $data);
+							$count = 1;
+							for ($i = 0; $i < count($data); ++$i){
+								$data[$i] = explode( "\t", $data[$i]);
+								if($data[$i][0] !=="" && $data[$i][1] !==""){
+									echo '<div class ="banner" id="banner' . $count++ . '" style="background-color:' . $data[$i][1] . ';">' . $data[$i][0] .'</div>';
+								}
+
+
+								//<div class ="banner" id="banner1">バナー1</div>
+							}
+							// var_dump($data);
+
+
+
+
+
+
+
+						?>
                     </div>
                 </div>
                 <a href="javascript:void(0);" class="bannerright">Right</a>

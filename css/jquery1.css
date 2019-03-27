@@ -180,28 +180,7 @@ section.fill_section:nth-child(2) .banners .float.move-n.move-l {
 section.fill_section:nth-child(2) .banners .float .banner {
   height: 100px;
   min-width: 250px;
-  background-color: white;
   transition: .1s margin;
-}
-
-section.fill_section:nth-child(2) .banners .float .banner#banner1 {
-  background-color: blue;
-}
-
-section.fill_section:nth-child(2) .banners .float .banner#banner2 {
-  background-color: green;
-}
-
-section.fill_section:nth-child(2) .banners .float .banner#banner3 {
-  background-color: purple;
-}
-
-section.fill_section:nth-child(2) .banners .float .banner#banner4 {
-  background-color: gray;
-}
-
-section.fill_section:nth-child(2) .banners .float .banner#banner5 {
-  background-color: orchid;
 }
 
 section.fill_section:nth-child(3) {
