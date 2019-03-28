@@ -1,5 +1,5 @@
 $(function(){
-	$(document).on('#button1',function(){
+	$(document).on('click','#button1',function(){
 		$('p').remove();
 		var error_flg = false;
 		if ($("input[name='name']").val().length < 2) {
@@ -27,46 +27,12 @@ $(function(){
 			// alert('成功しました');
 			$("#sample-form").submit();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
 		}
 		else {
 			// alert('失敗しました');
 			return false;
 		}
 	});
-	$(document).on('#button2',function(){});
-	$(document).on('#button3',function(){
-		error_flg = $("input[name='name']").val().length < 2 ||
-					$("input[name='name']").val().length > 30 ||
-					$("input[name='password']").val().length < 6 ||
-					$("input[name='password']").val().length > 30 ? true : false;
-		if(!error_flg){
-			// alert('成功しました');
-			$("#button3").submit();
-		}
-		else {
-			// alert('失敗しました');
-			return false;
-		}
-	});
+	$(document).on('click','#button2',function(){});
+	$(document).on('click','#button3',function(){});
 });
