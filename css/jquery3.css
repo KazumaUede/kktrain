@@ -29,6 +29,7 @@ form p {
 form .container_input {
   display: block;
   width: calc(100% - 60px);
+  height: 18.75px;
   padding: 15px;
   border: none;
   border-radius: 5px;
@@ -38,7 +39,7 @@ form .container_input {
   background-color: white;
 }
 
-form .button_container {
+form .inputswitch {
   display: flex;
 }
 
