@@ -43,7 +43,7 @@ form .inputswitch {
   display: flex;
 }
 
-form input[type="text"], form input[type="var"] {
+form input[type="text"], form input[type="var"], form input[type="password"] {
   display: block;
   width: calc(100% - 30px);
   padding: 15px;

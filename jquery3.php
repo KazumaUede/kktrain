@@ -42,7 +42,7 @@
 	<div class = "error_msg" id="password"></div>
 		<div class = "password_container">
 			<div class ="inputswitch">
-				<input  type="text" name="password" value="" placeholder="(例)となりの４８はあ０１" required maxlength="30" />
+				<input  type="password" name="password" value="" placeholder="(例)となりの４８はあ０１" required maxlength="30" />
 			</div>
 		</div>
 	<div class = "button_container">
