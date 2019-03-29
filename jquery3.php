@@ -8,13 +8,18 @@
 		$bytes = openssl_random_pseudo_bytes($TOKEN_LENGTH);
 		return bin2hex($bytes);
 	}
-	$_SESSION['csrf_token'] = get_csrf_token();
-	if (isset($_POST['csrf_token'])
-	&& $_POST['csrf_token'] === $_SESSION['csrf_token']) {
-		echo !isset($_SESSION['error'])? "ok" : $_SESSION['error'] ;
+
+	if (isset($_POST['csrf_token'])){
+		if ($_POST['csrf_token'] === $_SESSION['csrf_token']) {
+		}else{
+			session_destroy();
+			exit;
+		}
 	} else {
-		session_destroy();
+		$_SESSION['csrf_token'] = get_csrf_token();
 	}
+
+
 	if(isset($_POST["name"]) && isset($_POST["password"])){
 		if (mb_strlen($_POST["name"]) < 2) {
 			$result = "<p>名前は２文字以上必要です。</p>";
@@ -25,6 +30,7 @@
 			echo $result;
 		}
 		echo $result ===""? "ok" : "";
+
 		exit;
 	}
 

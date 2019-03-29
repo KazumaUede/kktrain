@@ -63,5 +63,15 @@ $(function(){
 		$('.button_container').append(appendhtml);
 	});
 
+	$(document).on('click','#button2',function(){
+		event.preventDefault();
+		$('.inputswitch').remove();
+		appendhtml = '<div class ="inputswitch"><input type="text" name="name" value="' + inputname + '" placeholder=" (例)佐藤太郎" required maxlength="30" /></div>'
+		$('.name_container').append(appendhtml);
+		appendhtml = '<div class ="inputswitch"><input  type="password" name="password" value="' + inputpassword + '" placeholder="(例)となりの４８はあ０１" required maxlength="30" /></div>'
+		$('.password_container').append(appendhtml);
+		appendhtml = '<div class ="inputswitch"><input id="button1" type="submit" value="確認"  name="button1"></div>';
+		$('.button_container').append(appendhtml);
+	});
 
 });
