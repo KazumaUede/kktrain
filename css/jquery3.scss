@@ -6,7 +6,7 @@ form{
 	background: #cde4ff;
 	border-top: solid 5px #5989cf;
 	border-bottom: solid 5px #5989cf;
-	h5{
+	h6{
 		height: 25px;
 		line-height: 25px;
 		font-size: 15px;
@@ -15,7 +15,7 @@ form{
 		}
 	}
     .error_msg{
-        width: 500px;
+        width: calc(100% - 60px);
         color: #dc143c;
         border-radius: 5px;
         list-style-type: none;

@@ -12,13 +12,13 @@
 	if (isset($_POST['csrf_token'])){
 		if ($_POST['csrf_token'] === $_SESSION['csrf_token']) {
 		}else{
-			session_destroy();
+			$result ="<p>不正な送信です</p>";
+			echo $result;
 			exit;
 		}
 	} else {
 		$_SESSION['csrf_token'] = get_csrf_token();
 	}
-
 
 	if(isset($_POST["name"]) && isset($_POST["password"])){
 		if (mb_strlen($_POST["name"]) < 2) {
@@ -26,7 +26,7 @@
 			echo $result;
 		}
 		if (mb_strlen($_POST["password"]) < 6) {
-			$result = "<p>おまじないは２文字以上必要です。</p>";
+			$result = "<p>おまじないは６文字以上必要です。</p>";
 			echo $result;
 		}
 		echo $result ===""? "ok" : "";
@@ -38,18 +38,18 @@
 	$pagetitle = "セクション";
 	require_once("./template/system_header.php"); ?>
 <form id="formajax" action="" method="Post">
-	<h5>投稿フォーム</h5>
+	<h6>投稿フォーム</h6>
 	<div class = "title_container">
 	</div>
 	<div class = "error_msg"></div>
 	<input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>" />
-	<h5>名前<em>(必須)</em></h5>
+	<h6>名前<em>(必須)</em></h6>
 		<div class = "name_container">
 			<div class ="inputswitch">
 				<input type="text" name="name" value="" placeholder=" (例)佐藤太郎" required maxlength="30" />
 			</div>
 		</div>
-	<h5>おまじない<em>(必須)</em></h5>
+	<h6>おまじない<em>(必須)</em></h6>
 		<div class = "password_container">
 			<div class ="inputswitch">
 				<input  type="password" name="password" value="" placeholder="(例)となりの４８はあ０１" required maxlength="30" />

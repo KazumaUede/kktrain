@@ -8,18 +8,18 @@ form {
   border-bottom: solid 5px #5989cf;
 }
 
-form h5 {
+form h6 {
   height: 25px;
   line-height: 25px;
   font-size: 15px;
 }
 
-form h5 em {
+form h6 em {
   color: red;
 }
 
 form .error_msg {
-  width: 500px;
+  width: calc(100% - 60px);
   color: #dc143c;
   border-radius: 5px;
   list-style-type: none;
