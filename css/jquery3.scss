@@ -14,10 +14,9 @@ form{
 			color: red;
 		}
 	}
-    p{
+    .error_msg{
         width: 500px;
-        color: crimson;
-        border: 2px solid crimson;
+        color: #dc143c;
         border-radius: 5px;
         list-style-type: none;
     }

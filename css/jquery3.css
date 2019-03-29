@@ -18,10 +18,9 @@ form h5 em {
   color: red;
 }
 
-form p {
+form .error_msg {
   width: 500px;
-  color: crimson;
-  border: 2px solid crimson;
+  color: #dc143c;
   border-radius: 5px;
   list-style-type: none;
 }
