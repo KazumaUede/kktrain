@@ -1,14 +1,5 @@
 <?php
 	session_start();
-
-	if (isset($_POST['csrf_token'])
-	&& $_POST['csrf_token'] === $_SESSION['csrf_token']) {
-		echo "正常なリクエストです";
-		$formcheck = true;
-	} else {
-		echo "不正なリクエストです";
-		$formcheck = false;
-	}
 	//トークン作成
 	function get_csrf_token() {
 		$TOKEN_LENGTH = 16;//16*2=32バイト
@@ -16,15 +7,25 @@
 		return bin2hex($bytes);
 	}
 	$_SESSION['csrf_token'] = get_csrf_token();
-	$_SESSION['name'] = !isset($_SESSION['name'])? '' : $_POST['name'] ;
-	$_SESSION['password'] = !isset($_SESSION['password'])? '' : $_POST['password'] ;
+	if (isset($_POST['csrf_token'])
+	&& $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+		echo !isset($_SESSION['error'])? "ok" : $_SESSION['error'] ;
+	} else {
+		echo "不正なリクエストです";
+		echo !isset($_SESSION['error'])? "ok" : "ng" ;
+	}
+
+
+
+
+
 
 
 
 	//ヘッダ
 	$pagetitle = "セクション";
 	require_once("./template/system_header.php"); ?>
-<form action="" method="Post">
+<form id="formajax" action="" method="Post">
 	<div class = "title_container">
 		<div class ="inputswitch">
 			<h5>投稿フォーム</h5>
@@ -50,7 +51,6 @@
 			<input id="button1" type="submit" value="確認"  name="button1">
 		</div>
 	</div>
-
 </form>
 <!-- フッター -->
 <?php require_once("./template/system_footer.php"); ?>
