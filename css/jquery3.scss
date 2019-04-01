@@ -47,7 +47,8 @@ form{
 			outline: none;
 			margin-bottom: 10px;
 		}
-		&[type="submit"] {
+		&[type="submit"],
+		&[type="button"] {
 			display: block;
 			width: 100px;
 			margin-bottom: 10px;

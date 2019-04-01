@@ -1,7 +1,4 @@
 $(function(){
-	var error_flg ;
-	var beforecsrf_token;
-	var aftercsrf_token;
 	var inputname;
 	var inputpassword;
 	var appendhtml = "";
@@ -35,7 +32,8 @@ $(function(){
 				appendhtml = '<div class ="inputswitch"><input type="hidden" name="password" value="' + inputpassword + '" /></div>';
 				appendhtml += '<div class ="inputswitch"><div class="container_input">' + maskpassword + '</div></div>';
 				$('.password_container').append(appendhtml);
-				appendhtml = '<div class ="inputswitch"><input id="button2" type="submit" value="修正"  name="button2"><input id="button3" type="submit" value="送信"  name="button3"></div>';
+				appendhtml = '<div class ="inputswitch"><input type="hidden" name="send" value="go" /></div>';
+				appendhtml += '<div class ="inputswitch"><input id="button2" type="submit" value="修正"  name="button2"><input id="button3" type="submit" value="送信"  name="button3"></div>';
 				$('.button_container').append(appendhtml);
 				$('.error_msg').css({
 					"border": "0px solid #dc143c"
@@ -70,7 +68,8 @@ $(function(){
 			data: {
 				csrf_token: $("input[name='csrf_token']").val(),
 				name: $("input[name='name']").val(),
-				password: $("input[name='password']").val()
+				password: $("input[name='password']").val(),
+				send: $("input[name='send']").val()
 			},
 			type: "POST"
 		}).done(function(response) {
@@ -79,7 +78,7 @@ $(function(){
 				$('h6').remove();
 				appendhtml = '<div class ="inputswitch"><h6><em>登録完了しました</em></h6></div>';
 				$('.title_container').append(appendhtml);
-				appendhtml = '<div class ="inputswitch"><input id="button4" type="submit" value="戻る"  name="button4"></div>';
+				appendhtml = '<div class ="inputswitch"><input type="button" onclick="location.href=' + "'jquery3.php'" + '" value="戻る"></div>';
 				$('.button_container').append(appendhtml);
 				$('.error_msg').css({
 					"border": "0px solid #dc143c"

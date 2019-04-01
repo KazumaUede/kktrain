@@ -30,6 +30,21 @@
 			echo $result;
 		}
 		echo $result ===""? "ok" : "";
+		if ($result ==="" && isset($_POST["send"])){
+
+			try {
+				// MySQLサーバへ接続
+				$pdo = new PDO("mysql:host=localhost; dbname=jquery3;charset=utf8","Kazuma_U", "nakuyobou3");
+			} catch(PDOException $e){
+				var_dump($e->getMessage());
+			}
+			$sql ="INSERT INTO users (name,password) VALUE (?,?) ";
+			$stmt = $pdo -> prepare($sql);
+			$stmt -> execute([$_POST['name'],$_POST['password']]);
+			$pdo = null;
+			session_unset();
+		}
+
 
 		exit;
 	}
