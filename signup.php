@@ -38,9 +38,11 @@
 			} catch(PDOException $e){
 				var_dump($e->getMessage());
 			}
+			$hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
 			$sql ="INSERT INTO users (name,password) VALUE (?,?) ";
 			$stmt = $pdo -> prepare($sql);
-			$stmt -> execute([$_POST['name'],$_POST['password']]);
+			$stmt -> execute([$_POST['name'],$hash]);
 			$pdo = null;
 			session_unset();
 		}

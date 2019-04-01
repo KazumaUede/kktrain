@@ -8,7 +8,7 @@ $(function(){
 		event.preventDefault();
 		$('p').remove();
 		$.ajax({
-			url:"jquery3.php",
+			url:"signup.php",
 			data: {
 				csrf_token: $("input[name='csrf_token']").val(),
 				name: $("input[name='name']").val(),
