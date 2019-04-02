@@ -64,7 +64,7 @@ $(function(){
 	$(document).on('click','#button3',function(){
 		event.preventDefault();
 		$.ajax({
-			url:"jquery3.php",
+			url:"signup.php",
 			data: {
 				csrf_token: $("input[name='csrf_token']").val(),
 				name: $("input[name='name']").val(),
@@ -78,7 +78,7 @@ $(function(){
 				$('h6').remove();
 				appendhtml = '<div class ="inputswitch"><h6><em>登録完了しました</em></h6></div>';
 				$('.title_container').append(appendhtml);
-				appendhtml = '<div class ="inputswitch"><input type="button" onclick="location.href=' + "'jquery3.php'" + '" value="戻る"></div>';
+				appendhtml = '<div class ="inputswitch"><input type="button" onclick="location.href=' + "'index.php'" + '" value="戻る"></div>';
 				$('.button_container').append(appendhtml);
 				$('.error_msg').css({
 					"border": "0px solid #dc143c"
