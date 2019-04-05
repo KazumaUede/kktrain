@@ -15,7 +15,6 @@
 			$result = "<p>パスワードは６文字以上必要です。</p>";
 			echo $result;
 		}
-		echo $result ===""? "ok" : "";
 		if ($result ==="" && isset($_POST["send"])){
 			try{
 				$pdo = new PDO("mysql:host=localhost; dbname=miniapp;charset=utf8","Kazuma_U", "nakuyobou3");
@@ -25,10 +24,11 @@
 				$sth->execute();
 				$pass = $sth->fetch();
 				if(password_verify($_POST['password'], $pass['password'])){
-					print '認証成功';
-					header('location:index.php');
+					echo "ok";
+					exit;
 				}else{
-					print '認証失敗';
+					$result ='認証失敗';
+					echo $result;
 				}
 			}catch (PDOException $e) {
 				print('接続失敗:' . $e->getMessage());

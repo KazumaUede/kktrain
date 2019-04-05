@@ -20,7 +20,7 @@
 
 			try {
 				// MySQLサーバへ接続
-				$pdo = new PDO("mysql:host=localhost; dbname=jquery3;charset=utf8","Kazuma_U", "nakuyobou3");
+				$pdo = new PDO("mysql:host=localhost; dbname=miniapp;charset=utf8","Kazuma_U", "nakuyobou3");
 			} catch(PDOException $e){
 				var_dump($e->getMessage());
 			}
