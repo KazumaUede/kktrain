@@ -46,7 +46,7 @@ while (true) {
     for ($i = 0; $i < STATION_NUMBER; $i++) {
         if (!$fix[$i] && $adjacencyMatrix[$minStation][$i] > 0) {
             // 自分の駅経由で移動する場合の必要時間
-            $newTime = $minTime + $adjacencyMatrix[$minStation][$i]; 
+            $newTime = $minTime + $adjacencyMatrix[$minStation][$i];
             if ($currentCost[$i] == -1 || $currentCost[$i] > $newTime) {
                 // 今登録されている時間よりも、この駅経由で移動した時間が速いので、新しい時間を登録する
                 $currentCost[$i] = $newTime;
