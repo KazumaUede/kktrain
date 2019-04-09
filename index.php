@@ -1,21 +1,16 @@
 <?php
+
 	session_start();
 	$result = "";
 	$title ="乗り換え検索";
 	//トークン作成
 	require_once("./template/csrf.php");
-	// 二駅の所属IDを抽出する
-	// SELECT `stations`.`affiliation_id` FROM `stations` WHERE id in( . $_POST["a_station"] . , . $_POST["a_station"] .)
-
 
 	if(isset($_POST["send"]) && isset($_POST["d_station"] ) && isset($_POST["a_station"])){
 		if ($_POST["d_station"] !== $_POST["a_station"] ){
-
-			// var_dump($stations);
+			header("Content-Type: application/json; charset=UTF-8");//json形式で出力するときは必須
 			$d_station = get_affiliation($_POST["d_station"]);
 			$a_station = get_affiliation($_POST["a_station"]);
-			// var_dump($d_station);
-			// exit;
 
 			//中継の駅が選択された場合　[1]に初期値を設定
 			$d_station["affiliation_id"] = $d_station["affiliation_id"] > 9? relay($d_station["affiliation_id"]) : $d_station["affiliation_id"];
@@ -33,9 +28,6 @@
 			while($result = $stmt2->fetch(PDO::FETCH_ASSOC)){
 				$rail = $result;
 			}
-			// require_once("./template/Dijkstra.php");
-			echo "出発駅ID" . $_POST["d_station"] . "到着駅ID" . $_POST["a_station"];
-			echo  "最短ルート" . $rail["id"];
 
 			try{
 				$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
@@ -51,23 +43,16 @@
 				$allstations[] = $result;
 			}
 			if (isset($allstations)){
-				var_dump($allstations);
+				//json形式で出力する
+				echo json_encode($allstations);
 			}else{
 				echo"失敗";
 			}
-			exit;
-
-
-
-			// echo "最短ルート:" . $rail["id"];
-			// SELECT`stations`.* FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id = 1
-			// var_dump($rails) ;
 			exit;
 		}else{
 			echo"お前はもう到着している!(出発駅と到着駅同じですよ)";
 		}
 		exit;
-		// SELECT * FROM `rails` WHERE FIND_IN_SET('1', `include_rails`) and FIND_IN_SET('5', `include_rails`)
 	}else{
 		try{
 			$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
@@ -141,5 +126,7 @@
 	<?php selectstation('a_station',$stations) ?>
 	<input id="button" type="submit" value="検索"  name="send">
 </form>
+<h4>結果<h4>
+<ul id="result"></ul>
 <!-- フッター -->
 <?php require_once("./template/system_footer.php"); ?>

@@ -19,6 +19,7 @@
 	?>
 	<script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
 <?php
+
 	$name = './js/' . str_replace(".php", "", basename($_SERVER['PHP_SELF'])) .'.js';
 	if (file_exists($name)){
 		echo '<script type="text/javascript" src="'. $name .'"></script>';
