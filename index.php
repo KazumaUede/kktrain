@@ -32,7 +32,15 @@
 			try{
 				$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
 				// 対象駅を抽出する
-				$sql = "SELECT`stations`.* FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =" . $rail["id"] ;
+				//さらに並び替えが必要か判別する　①枝から下へ向かうとき　②下から上の枝に向かうとき つまり上側の枝の順番をひっくり返す。
+				if ($d_station["affiliation_id"]%2==0 && $d_station["affiliation_id"] < $a_station["affiliation_id"]){
+					$sql = "(" . "SELECT `stations`.* , 1 AS row FROM `stations`WHERE affiliation_id =" . $d_station["affiliation_id"] . " order by id DESC LIMIT 20000". ")UNION all(" . "SELECT`stations`.* , 2 AS row FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =". $rail["id"] . " and  `stations`.`affiliation_id`<> ". $d_station["affiliation_id"] ."  order by id  LIMIT 20000" . ")";
+				} else if($a_station["affiliation_id"]%2==0 && $d_station["affiliation_id"] > $a_station["affiliation_id"]){
+					$sql = "(" . "SELECT `stations`.* , 1 AS row FROM `stations`WHERE affiliation_id =" . $a_station["affiliation_id"] . " order by id DESC LIMIT 20000". ")UNION all(" . "SELECT`stations`.* , 2 AS row FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =". $rail["id"] . " and  `stations`.`affiliation_id`<> ". $a_station["affiliation_id"] ."  order by id  LIMIT 20000" . ")";
+				} else{
+					$sql = "SELECT`stations`.* FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =" . $rail["id"] ;
+				}
+				// $sql = "SELECT`stations`.* FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =" . $rail["id"] ;
 				$stmt3 = $pdo->prepare($sql);
 				$stmt3->execute();
 			}catch (PDOException $e) {
@@ -116,7 +124,6 @@
 		}
 		return $stations;
 	}
-
 ?>
 <h4>乗り換え検索<h4>
 <form action="" method="Post">
