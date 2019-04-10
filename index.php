@@ -9,8 +9,8 @@
 	if(isset($_POST["send"]) && isset($_POST["d_station"] ) && isset($_POST["a_station"])){
 		if ($_POST["d_station"] !== $_POST["a_station"] ){
 			header("Content-Type: application/json; charset=UTF-8");//json形式で出力するときは必須
-			$d_station = get_affiliation($_POST["d_station"]);
-			$a_station = get_affiliation($_POST["a_station"]);
+			$d_station = get_rail($_POST["d_station"]);
+			$a_station = get_rail($_POST["a_station"]);
 
 			//中継の駅が選択された場合　[1]に初期値を設定
 			$d_station["rail_id"] = $d_station["rail_id"] > 9? relay($d_station["rail_id"]) : $d_station["rail_id"];
@@ -51,6 +51,91 @@
 				$allstations[] = $result;
 			}
 			if (isset($allstations)){
+				// 隣接行列を作成する
+				$bigarray = [];
+				$station_names = [];
+				$count = count($allstations) -1;
+				$i = 0;
+				foreach($allstations as $station){
+					if ($_POST["d_station"] === $station["id"]){
+						$startstation = $i;
+					}
+					array_push($station_names, $station["name"]);
+					$array = [];
+					//all0の配列を全体の配列に挿入する
+					for($j = 0; $j <= $count; $j++ ){
+						array_push($array, 0);
+					}
+					array_push($bigarray, $array);
+					if($i == 0){
+						// 初期値
+						// 普通
+						$local = $station["local"] ==1? 0: -1;
+						// エアポート急行
+						$a_express = $station["a_express"] ==1? 0: -1;
+						// 特急
+						$l_express = $station["l_express"] ==1? 0: -1;
+						// 快特
+						$kl_express = $station["kl_express"] ==1? 0: -1;
+						// 快特エアポート急行
+						$ak_express = $station["ak_express"] ==1? 0: -1;
+					}else{
+						// コストを算出
+						// 普通
+						if ($station["local"] == 1 && $local !==-1 ){
+							$bigarray[$local][$i] = 6;
+							$bigarray[$i][$local] = 6;
+							$local =  $i;
+						}
+						// エアポート急行
+						if ($station["a_express"] == 1 && $a_express !==-1 ){
+							$bigarray[$a_express][$i] = 4 * ($i - $a_express) +1;
+							$bigarray[$i][$a_express] = 4 * ($i - $a_express) +1;
+							$a_express =  $i;
+						}
+						// 特急
+						if ($station["l_express"] == 1 && $l_express !==-1 ){
+							$bigarray[$l_express][$i] = 3 * ($i - $l_express) +1;
+							$bigarray[$i][$l_express] = 3 * ($i - $l_express) +1;
+							$l_express =  $i;
+						}
+						// 快特
+						if ($station["kl_express"] == 1 && $kl_express !==-1 ){
+							$bigarray[$kl_express][$i] = 2 * ($i - $kl_express) +1;
+							$bigarray[$i][$kl_express] = 2 * ($i - $kl_express) +1;
+							$kl_express =  $i;
+						}
+						// 快特エアポート急行
+						if ($station["ak_express"] == 1 && $ak_express !==-1 ){
+							$bigarray[$ak_express][$i] = 1 * ($i - $ak_express) +1;
+							$bigarray[$i][$ak_express] = 1 * ($i - $ak_express) +1;
+							$ak_express =  $i;
+						}
+						// 使用できる電車が増えたら追加する
+						if ($local == -1 && $station["local"] ==1){
+							$local = $i;
+						}
+						if ($a_express == -1 && $station["a_express"] ==1){
+							$a_express = $i;
+						}
+						if ($l_express == -1 && $station["l_express"] ==1){
+							$l_express = $i;
+						}
+						if ($kl_express == -1 && $station["kl_express"] ==1){
+							$kl_express = $i;
+						}
+						if ($ak_express == -1 && $station["ak_express"] ==1){
+							$ak_express = $i;
+						}
+					}
+					$i++;
+				}
+				require_once("./template/Dijkstra.php");
+				//json形式で出力する
+				// echo json_encode($bigarray);
+				exit;
+
+
 				//json形式で出力する
 				echo json_encode($allstations);
 			}else{
@@ -73,11 +158,7 @@
 		while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
 			$stations[] = $result;
 		}
-		// foreach($stations as $station){
-		// 	foreach($station as $data){
-		// 		var_dump($data);
-		// 	}
-		// }
+
 	}
 	$pagetitle = "miniapp";
 	require_once("./template/system_header.php");
@@ -108,7 +189,7 @@
 				break;
 			}
 	}
-	function get_affiliation($input){
+	function get_rail($input){
 		try{
 			$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
 			$sql = 'SELECT id,rail_id FROM stations WHERE id in( '. $input . ')';

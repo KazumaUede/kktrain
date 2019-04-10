@@ -1,11 +1,20 @@
 <?php
-define('STATION_NUMBER',count($allstations));
-define('START_STATION', $startstation);
-$stations    = $station_names;
+define('STATION_NUMBER',6);
+define('START_STATION', 1);
+$stations    = array('横浜', '武蔵小杉', '品川', '渋谷', '新橋', '溜池山王');
 
 //隣接行列
 //各所要時間を保持する
-$adjacencyMatrix = $bigarray;
+$adjacencyMatrix = array(
+    //横浜', '武蔵小杉', '品川', '渋谷', '新橋', '溜池山王'
+    array(0, 12, 28, 0, 0, 0),  //横浜基準
+    array(12, 0, 10, 13, 0, 0), //武蔵小杉基準
+    array(28, 10, 0, 11, 7, 0), //品川基準
+    array(0, 13, 11, 0, 0, 9),  //渋谷基準
+    array(0, 0, 7, 0, 0, 4),    //新橋基準
+    array(0, 0, 0, 9, 4, 0)     //溜池山王
+);
+// $adjacencyMatrix = $routes;
 
 for ($i=0; $i < STATION_NUMBER; $i++) {
     $currentCost[$i] = -1; //-1は無限大とする
@@ -47,11 +56,8 @@ while (true) {
     // 自分の駅を確定する
     $fix[$minStation] = true;
 }
-$result = [];
 for ($i = 0; $i < STATION_NUMBER; $i++) {
-	array_push($result, $stations[START_STATION] . "→" . $stations[$i] . "：" . ($currentCost[$i] - 1) . "分");
-	// echo ($stations[START_STATION] . "→" . $stations[$i] . "：" . $currentCost[$i] . "分");
-    // echo '<br>';
+    echo ($stations[START_STATION] . "→" . $stations[$i] . "：" . $currentCost[$i] . "分");
+    echo '<br>';
 }
-echo json_encode($result);
 ?>
