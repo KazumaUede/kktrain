@@ -133,7 +133,8 @@
 	<?php selectstation('a_station',$stations) ?>
 	<input id="button" type="submit" value="検索"  name="send">
 </form>
+<table class="result">
+</table>
 <h4>結果<h4>
-<ul id="result"></ul>
 <!-- フッター -->
 <?php require_once("./template/system_footer.php"); ?>
