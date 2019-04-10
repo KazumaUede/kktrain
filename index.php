@@ -13,12 +13,12 @@
 			$a_station = get_affiliation($_POST["a_station"]);
 
 			//中継の駅が選択された場合　[1]に初期値を設定
-			$d_station["affiliation_id"] = $d_station["affiliation_id"] > 9? relay($d_station["affiliation_id"]) : $d_station["affiliation_id"];
-			$a_station["affiliation_id"] = $a_station["affiliation_id"] > 9? relay($a_station["affiliation_id"]) : $a_station["affiliation_id"];
+			$d_station["rail_id"] = $d_station["rail_id"] > 9? relay($d_station["rail_id"]) : $d_station["rail_id"];
+			$a_station["rail_id"] = $a_station["rail_id"] > 9? relay($a_station["rail_id"]) : $a_station["rail_id"];
 			try{
 				$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
 				// 二駅の所属IDを抽出する
-				$sql = "SELECT id,MIN(include_rails) FROM `rails` WHERE FIND_IN_SET(" . $d_station["affiliation_id"] . ", `include_rails`) and FIND_IN_SET(". $a_station["affiliation_id"] .", `include_rails`)";
+				$sql = "SELECT id,MIN(belongs) FROM `routes` WHERE FIND_IN_SET(" . $d_station["rail_id"] . ", `belongs`) and FIND_IN_SET(". $a_station["rail_id"] .", `belongs`)";
 				$stmt2 = $pdo->prepare($sql);
 				$stmt2->execute();
 			}catch (PDOException $e) {
@@ -26,21 +26,21 @@
 				die();
 			}
 			while($result = $stmt2->fetch(PDO::FETCH_ASSOC)){
-				$rail = $result;
+				$route = $result;
 			}
 
 			try{
 				$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
 				// 対象駅を抽出する
 				//さらに並び替えが必要か判別する　①枝から下へ向かうとき　②下から上の枝に向かうとき つまり上側の枝の順番をひっくり返す。
-				if ($d_station["affiliation_id"]%2==0 && $d_station["affiliation_id"] < $a_station["affiliation_id"]){
-					$sql = "(" . "SELECT `stations`.* , 1 AS row FROM `stations`WHERE affiliation_id =" . $d_station["affiliation_id"] . " order by id DESC LIMIT 20000". ")UNION all(" . "SELECT`stations`.* , 2 AS row FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =". $rail["id"] . " and  `stations`.`affiliation_id`<> ". $d_station["affiliation_id"] ."  order by id  LIMIT 20000" . ")";
-				} else if($a_station["affiliation_id"]%2==0 && $d_station["affiliation_id"] > $a_station["affiliation_id"]){
-					$sql = "(" . "SELECT `stations`.* , 1 AS row FROM `stations`WHERE affiliation_id =" . $a_station["affiliation_id"] . " order by id DESC LIMIT 20000". ")UNION all(" . "SELECT`stations`.* , 2 AS row FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =". $rail["id"] . " and  `stations`.`affiliation_id`<> ". $a_station["affiliation_id"] ."  order by id  LIMIT 20000" . ")";
+				if ($d_station["rail_id"]%2==0 && $d_station["rail_id"] < $a_station["rail_id"]){
+					$sql = "(" . "SELECT `stations`.* , 1 AS row FROM `stations`WHERE rail_id =" . $d_station["rail_id"] . " order by id DESC LIMIT 20000". ")UNION all(" . "SELECT`stations`.* , 2 AS row FROM `stations`, `routes`, `rails` WHERE `stations`.`rail_id` = `rails`.id and  `rails`.route_id = `routes`.id and  `routes`.id =". $route["id"] . " and  `stations`.`rail_id`<> ". $d_station["rail_id"] ."  order by id  LIMIT 20000" . ")";
+				} else if($a_station["rail_id"]%2==0 && $d_station["rail_id"] > $a_station["rail_id"]){
+					$sql = "(" . "SELECT `stations`.* , 1 AS row FROM `stations`WHERE rail_id =" . $a_station["rail_id"] . " order by id DESC LIMIT 20000". ")UNION all(" . "SELECT`stations`.* , 2 AS row FROM `stations`, `routes`, `rails` WHERE `stations`.`rail_id` = `rails`.id and  `rails`.route_id = `routes`.id and  `routes`.id =". $route["id"] . " and  `stations`.`rail_id`<> ". $a_station["rail_id"] ."  order by id  LIMIT 20000" . ")";
 				} else{
-					$sql = "SELECT`stations`.* FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =" . $rail["id"] ;
+					$sql = "SELECT`stations`.* FROM `stations`, `routes`, `rails` WHERE `stations`.`rail_id` = `rails`.id and  `rails`.route_id = `routes`.id and  `routes`.id =" . $route["id"] ;
 				}
-				// $sql = "SELECT`stations`.* FROM `stations`, `rails`, `affiliations` WHERE `stations`.`affiliation_id` = `affiliations`.id and  `affiliations`.rails_id = `rails`.id and  `rails`.id =" . $rail["id"] ;
+				// $sql = "SELECT`stations`.* FROM `stations`, `routes`, `rails` WHERE `stations`.`rail_id` = `rails`.id and  `rails`.route_id = `routes`.id and  `routes`.id =" . $route["id"] ;
 				$stmt3 = $pdo->prepare($sql);
 				$stmt3->execute();
 			}catch (PDOException $e) {
@@ -56,7 +56,6 @@
 			}else{
 				echo"失敗";
 			}
-			exit;
 		}else{
 			echo"お前はもう到着している!(出発駅と到着駅同じですよ)";
 		}
@@ -112,7 +111,7 @@
 	function get_affiliation($input){
 		try{
 			$pdo = new PDO("mysql:host=localhost; dbname=kktrain;charset=utf8","sampleuser", "momota6");
-			$sql = 'SELECT id,affiliation_id FROM stations WHERE id in( '. $input . ')';
+			$sql = 'SELECT id,rail_id FROM stations WHERE id in( '. $input . ')';
 			$stmt = $pdo->prepare($sql);
 			$stmt->execute();
 		}catch (PDOException $e) {
