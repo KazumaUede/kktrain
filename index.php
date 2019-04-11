@@ -53,6 +53,7 @@
 			if (isset($allstations)){
 				// 隣接行列を作成する
 				$bigarray = [];
+				$bigarray2 = [];
 				$station_names = [];
 				$count = count($allstations) -1;
 				$i = 0;
@@ -65,11 +66,14 @@
 					}
 					array_push($station_names, $station["name"]);
 					$array = [];
+					$array2 = [];
 					//all0の配列を全体の配列に挿入する
 					for($j = 0; $j <= $count; $j++ ){
 						array_push($array, 0);
+						array_push($array2, 0);
 					}
 					array_push($bigarray, $array);
+					array_push($bigarray2, $array2);
 					if($i == 0){
 						// 初期値
 						// 普通
@@ -80,7 +84,7 @@
 						$l_express = $station["l_express"] ==1? 0: -1;
 						// 快特
 						$kl_express = $station["kl_express"] ==1? 0: -1;
-						// 快特エアポート急行
+						// エアポート快特
 						$ak_express = $station["ak_express"] ==1? 0: -1;
 					}else{
 						// コストを算出
@@ -88,30 +92,41 @@
 						if ($station["local"] == 1 && $local !==-1 ){
 							$bigarray[$local][$i] = 6;
 							$bigarray[$i][$local] = 6;
+							$bigarray2[$local][$i] = "普通";
+							$bigarray2[$i][$local] = "普通";
 							$local =  $i;
 						}
 						// エアポート急行
 						if ($station["a_express"] == 1 && $a_express !==-1 ){
 							$bigarray[$a_express][$i] = 4 * ($i - $a_express) +1;
 							$bigarray[$i][$a_express] = 4 * ($i - $a_express) +1;
+							$bigarray2[$a_express][$i] = "急行";
+							$bigarray2[$i][$a_express] = "急行";
 							$a_express =  $i;
 						}
 						// 特急
 						if ($station["l_express"] == 1 && $l_express !==-1 ){
 							$bigarray[$l_express][$i] = 3 * ($i - $l_express) +1;
 							$bigarray[$i][$l_express] = 3 * ($i - $l_express) +1;
+							$bigarray2[$l_express][$i] = "特急";
+							$bigarray2[$i][$l_express] = "特急";
+
 							$l_express =  $i;
 						}
 						// 快特
 						if ($station["kl_express"] == 1 && $kl_express !==-1 ){
 							$bigarray[$kl_express][$i] = 2 * ($i - $kl_express) +1;
 							$bigarray[$i][$kl_express] = 2 * ($i - $kl_express) +1;
+							$bigarray2[$kl_express][$i] = "快特";
+							$bigarray2[$i][$kl_express] = "快特";
 							$kl_express =  $i;
 						}
-						// 快特エアポート急行
+						// エアポート快特
 						if ($station["ak_express"] == 1 && $ak_express !==-1 ){
 							$bigarray[$ak_express][$i] = 1 * ($i - $ak_express) +1;
 							$bigarray[$i][$ak_express] = 1 * ($i - $ak_express) +1;
+							$bigarray2[$ak_express][$i] = "エアポート快特";
+							$bigarray2[$i][$ak_express] = "エアポート快特";
 							$ak_express =  $i;
 						}
 						// 使用できる電車が増えたら追加する
