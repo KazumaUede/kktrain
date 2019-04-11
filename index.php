@@ -60,6 +60,9 @@
 					if ($_POST["d_station"] === $station["id"]){
 						$startstation = $i;
 					}
+					if ($_POST["a_station"] === $station["id"]){
+						$goalstation = $i;
+					}
 					array_push($station_names, $station["name"]);
 					$array = [];
 					//all0の配列を全体の配列に挿入する
@@ -216,5 +219,6 @@
 <table class="result">
 </table>
 <h4>結果<h4>
+<ul></ul>
 <!-- フッター -->
 <?php require_once("./template/system_footer.php"); ?>

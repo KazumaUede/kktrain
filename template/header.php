@@ -1,5 +1,5 @@
 
 <header>
-	<h1>miniapp</h1>
+	<h1>KKTRAIN</h1>
 </header>
 <div class= "wrapper">
