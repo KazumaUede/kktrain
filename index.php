@@ -57,6 +57,7 @@
 				$station_names = [];
 				$count = count($allstations) -1;
 				$i = 0;
+
 				foreach($allstations as $station){
 					if ($_POST["d_station"] === $station["id"]){
 						$startstation = $i;
