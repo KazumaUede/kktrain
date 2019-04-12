@@ -19,6 +19,7 @@ for ($i=0; $i < STATION_NUMBER; $i++) {
 //2.スタート地点を-1→0とする（スタートノード）
 $currentCost[START_STATION] = 0;
 $test = array();
+$laststation= [];
 while (true) {
 
     //3.所要時間を無限大に初期設定する
@@ -43,8 +44,6 @@ while (true) {
         break;
     }
 	// 自分の駅から伸びているすべての駅の所要時間を調べる
-	$route = [];
-	$j = 0;
     for ($i = 0; $i < STATION_NUMBER; $i++) {
 		// もし　$fix[$i]が　false　かつ　$minStation番目の駅情報が０より大きいとき
         if (!$fix[$i] && $adjacencyMatrix[$minStation][$i] > 0) {
@@ -55,10 +54,14 @@ while (true) {
 				$train = $adjacencyMatrix2[$minStation][$i];
 				$currentCost[$i] = $newTime;
 				if(!isset($test[$i])){$test[$i]="";}
+				//電車の初期値
+
+				//途中経路を表示
+				if(!isset($laststation[$i])){$laststation[$i]=$train;}
 				if(!isset($test[$minStation])){
-					$test[$i] = $stations[$i];
+					$test[$i] = "-" . $stations[$i]. "(" . $train. ")";
 				} else {
-					$test[$i] = "-".$test[$minStation]."-".$stations[$i] . $train;
+					$test[$i] = $test[$minStation]."-".$stations[$i] .  "(" . $train. ")";
 				}
 			}
 		}
@@ -69,8 +72,9 @@ while (true) {
 
 }
 
-array_push($result, $test[GOAL_STATION]);
-//array_push($result, $stations[START_STATION] . "→" . $stations[GOAL_STATION] . "：" . ($currentCost[GOAL_STATION] - 1) . "分");
+array_push($result, $stations[START_STATION] . $test[GOAL_STATION]);
+array_push($result,"[所要時間" . ($currentCost[GOAL_STATION] - 1) . "分]");
+// array_push($result, "\n" . $stations[START_STATION] . "→" . $stations[GOAL_STATION] . "：" . ($currentCost[GOAL_STATION] - 1) . "分");
 
 // for ($i = 0; $i < STATION_NUMBER; $i++) {
 // 	array_push($result, $stations[START_STATION] . "→" . $stations[$i] . "：" . ($currentCost[$i] - 1) . "分");
