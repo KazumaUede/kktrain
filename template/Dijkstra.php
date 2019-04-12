@@ -59,9 +59,9 @@ while (true) {
 				//途中経路を表示
 				if(!isset($laststation[$i])){$laststation[$i]=$train;}
 				if(!isset($test[$minStation])){
-					$test[$i] = "-" . $stations[$i]. "(" . $train. ")";
+					$test[$i] = "(" . $train. ")-" . $stations[$i];
 				} else {
-					$test[$i] = $test[$minStation]."-".$stations[$i] .  "(" . $train. ")";
+					$test[$i] = $test[$minStation]."(" . $train. ")-".$stations[$i]  ;
 				}
 			}
 		}
