@@ -1,7 +1,7 @@
 <?php
-define('STATION_NUMBER',count($allstations));
-define('START_STATION', $startstation);
-define('GOAL_STATION', $goalstation);
+define('STATION_NUMBER',count($bigarray));
+define('START_STATION', $start);
+define('GOAL_STATION', $goal);
 $stations = $station_names;
 $routes = [];
 $result = [];
@@ -58,7 +58,6 @@ while (true) {
 				$test[$i][] = array($train,$stations[$i]);
 				if(isset($test[$minStation])){
 					$test[$i] = array_merge($test[$minStation],$test[$i]);
-					// $test[$i] = "-(" . $train. ")-" . $stations[$i];
 				}
 			}
 		}
@@ -69,36 +68,39 @@ while (true) {
 }
 $savetrain;
 $getroutes =[];
-// echo json_encode($test[GOAL_STATION]);
-// exit;
+
+
 foreach($test[GOAL_STATION] as $route){
-    if ($route === reset($test[GOAL_STATION])) {
-		// 最初
-		$savetrain = $route;
-    }else if ($savetrain[0] === $route[0] && $route === end($test[GOAL_STATION])) {
-		// 最後
-		array_push($getroutes,$route);
-    }else{
-		if($savetrain[0] === $route[0]){
-
+		// スタートの隣がゴールなら
+		if (count($test[GOAL_STATION]) === 1){
+			array_push($getroutes,$route);
+		}elseif ($route === reset($test[GOAL_STATION])) {
+			// 最初
 			$savetrain = $route;
+		}else if ($savetrain[0] === $route[0] && $route === end($test[GOAL_STATION])) {
+			// 最後
+			array_push($getroutes,$route);
 		}else{
-			array_push($getroutes,$savetrain);
-				// 最後
-				if ($route === end($test[GOAL_STATION])) {
-					array_push($getroutes,$route);
-				}
-	}
-	$savetrain = $route;
+			if($savetrain[0] === $route[0]){
 
+				$savetrain = $route;
+			}else{
+				array_push($getroutes,$savetrain);
+					// 最後
+					if ($route === end($test[GOAL_STATION])) {
+						array_push($getroutes,$route);
+					}
+		}
+		$savetrain = $route;
+
+		}
 	}
-}
 $text = "";
 foreach($getroutes as $getroute){
 	$text .= "-(" . $getroute[0] . ")-" . $getroute[1];
 }
 $result = $stations[START_STATION] . $text . "[所要時間" . ($currentCost[GOAL_STATION] - 1) . "分]";
-
+//　途中駅を表示
 // array_push($result, $stations[START_STATION] . $test[GOAL_STATION]);
 // array_push($result,"[所要時間" . ($currentCost[GOAL_STATION] - 1) . "分]");
 // array_push($result, "\n" . $stations[START_STATION] . "→" . $stations[GOAL_STATION] . "：" . ($currentCost[GOAL_STATION] - 1) . "分");
@@ -107,7 +109,6 @@ $result = $stations[START_STATION] . $text . "[所要時間" . ($currentCost[GOA
 // 	array_push($result, $stations[START_STATION] . "→" . $stations[$i] . "：" . ($currentCost[$i] - 1) . "分");
 // }
 
-// echo json_encode($result);
 echo json_encode($result);
 exit;
 ?>

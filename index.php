@@ -2,7 +2,7 @@
 
 	session_start();
 	$result = "";
-	$title ="乗り換え検索";
+	// $title ="乗り換え検索";
 	//トークン作成
 	require_once("./template/csrf.php");
 
@@ -40,7 +40,6 @@
 				} else{
 					$sql = "SELECT`stations`.* FROM `stations`, `routes`, `rails` WHERE `stations`.`rail_id` = `rails`.id and  `rails`.route_id = `routes`.id and  `routes`.id =" . $route["id"] ;
 				}
-				// $sql = "SELECT`stations`.* FROM `stations`, `routes`, `rails` WHERE `stations`.`rail_id` = `rails`.id and  `rails`.route_id = `routes`.id and  `routes`.id =" . $route["id"] ;
 				$stmt3 = $pdo->prepare($sql);
 				$stmt3->execute();
 			}catch (PDOException $e) {
@@ -55,7 +54,7 @@
 				$bigarray = [];
 				$bigarray2 = [];
 				$station_names = [];
-				$count = count($allstations) -1;
+				// $count = count($allstations) -1;
 				$i = 0;
 				foreach($allstations as $station){
 					//出発駅
@@ -67,12 +66,33 @@
 					}
 					$i++;
 				}
-
-
-
-
+				$arraystation = [];
 				$i = 0;
-				foreach($allstations as $station){
+				$j = 0;
+				if($startstation < $goalstation ){
+					$start = 0;
+					foreach($allstations as $station){
+						if ($i >= $startstation && $i <= $goalstation ){
+							array_push($arraystation, $station);
+							$j++;
+						}
+						$i++;
+					}
+					$goal = $j -1;
+				}else{
+					$goal = 0;
+					foreach($allstations as $station){
+						if ($i >= $goalstation && $i <= $startstation ){
+							array_push($arraystation, $station);
+							$j++;
+						}
+						$i++;
+					}
+					$start = $j -1;
+				}
+				$count = $j -1;
+				$i = 0;
+				foreach($arraystation as $station){
 
 					array_push($station_names, $station["name"]);
 					$array = [];
@@ -159,18 +179,13 @@
 					$i++;
 				}
 				require_once("./template/Dijkstra.php");
-				//json形式で出力する
-				// echo json_encode($bigarray);
 				exit;
-
-
-				//json形式で出力する
-				echo json_encode($allstations);
 			}else{
 				echo"失敗";
 			}
 		}else{
-			echo"お前はもう到着している!(出発駅と到着駅同じですよ)";
+			echo json_encode("お前はもう到着している!(出発駅と到着駅同じですよ)");
+			exit;
 		}
 		exit;
 	}else{
@@ -188,8 +203,7 @@
 		}
 
 	}
-	$pagetitle = "miniapp";
-	require_once("./template/system_header.php");
+
 	function selectstation($name ,$stations){
 		$i = 1;
 		echo '<select name="' . $name . '">';
@@ -232,6 +246,9 @@
 		}
 		return $stations;
 	}
+
+	$pagetitle = "乗り換え検索";
+	require_once("./template/system_header.php");
 ?>
 <h4>乗り換え検索<h4>
 <form action="" method="Post">
