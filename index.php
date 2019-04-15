@@ -57,14 +57,23 @@
 				$station_names = [];
 				$count = count($allstations) -1;
 				$i = 0;
-
 				foreach($allstations as $station){
+					//出発駅
 					if ($_POST["d_station"] === $station["id"]){
 						$startstation = $i;
 					}
 					if ($_POST["a_station"] === $station["id"]){
 						$goalstation = $i;
 					}
+					$i++;
+				}
+
+
+
+
+				$i = 0;
+				foreach($allstations as $station){
+
 					array_push($station_names, $station["name"]);
 					$array = [];
 					$array2 = [];
